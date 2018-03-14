@@ -1,10 +1,11 @@
-package solutions.empire.wallyces
+package solutions.empire.wallyces.view
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import com.parse.ParseObject
 import kotlinx.android.synthetic.main.inc_cartao_professor.*
+import solutions.empire.wallyces.R
 
 class QuadroProfessorActivity : AppCompatActivity() {
 

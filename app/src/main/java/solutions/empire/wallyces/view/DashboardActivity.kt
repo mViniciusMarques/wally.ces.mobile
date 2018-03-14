@@ -1,9 +1,10 @@
-package solutions.empire.wallyces
+package solutions.empire.wallyces.view
 
 
 import android.content.Intent
 import android.os.Bundle
 import kotlinx.android.synthetic.main.inc_dashboard_professor.*
+import solutions.empire.wallyces.R
 import solutions.empire.wallyces.core.BaseActivity
 
 class DashboardActivity : BaseActivity() {

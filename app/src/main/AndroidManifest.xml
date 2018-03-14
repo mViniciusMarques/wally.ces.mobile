@@ -12,17 +12,17 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".LoginActivity">
+        <activity android:name=".authentication.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".QuadroProfessorActivity" />
-        <activity android:name=".BuscarProfessorActivity" />
-        <activity android:name=".CadastroProfessorActivity" />
-        <activity android:name=".DashboardActivity">
+        <activity android:name=".view.QuadroProfessorActivity" />
+        <activity android:name=".view.BuscarProfessorActivity" />
+        <activity android:name=".view.CadastroProfessorActivity" />
+        <activity android:name=".view.DashboardActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

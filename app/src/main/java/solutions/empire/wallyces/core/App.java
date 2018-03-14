@@ -3,15 +3,13 @@ package solutions.empire.wallyces.core;
 import android.app.Application;
 import android.content.Intent;
 import android.util.Log;
-import android.view.View;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.parse.Parse;
 
-import solutions.empire.wallyces.BuscarProfessorActivity;
-import solutions.empire.wallyces.CadastroProfessorActivity;
-import solutions.empire.wallyces.DashboardActivity;
-import solutions.empire.wallyces.LoginActivity;
+import solutions.empire.wallyces.view.BuscarProfessorActivity;
+import solutions.empire.wallyces.view.DashboardActivity;
+import solutions.empire.wallyces.authentication.LoginActivity;
 
 /**
  * Created by mviniciusmarques on 08/03/18.
@@ -22,7 +20,7 @@ public class App extends Application {
     public void onCreate() {
         super.onCreate();
         this.inicializarParse();
-        this.verificarUsuarioLogado();
+        this.tratarLoginUsuario();
 
     }
 
@@ -36,19 +34,18 @@ public class App extends Application {
         );
     }
 
-    private void verificarUsuarioLogado() {
+    private void tratarLoginUsuario() {
         FirebaseAuth auth = FirebaseAuth.getInstance();
         if(auth.getCurrentUser() != null) {
-            Log.e("PROVIDER_ID", auth.getCurrentUser().getDisplayName() + "    " +   auth.getCurrentUser().getProviderId() );
-            direcionarUsuario(auth);
+            direcionarUsuarioLogadoPorTipo(auth);
         } else {
             Intent i = new Intent(this,LoginActivity.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK );
             startActivity(i);        }
     }
 
-    private void direcionarUsuario(FirebaseAuth auth) {
+    private void direcionarUsuarioLogadoPorTipo(FirebaseAuth auth) {
         Intent intent;
-        if (auth.getCurrentUser().getDisplayName() == "") {
+        if (auth.getCurrentUser().getDisplayName().isEmpty()) {
             intent = new Intent(this,DashboardActivity.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK );
             startActivity(intent);
         } else {

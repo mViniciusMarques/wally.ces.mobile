@@ -1,4 +1,4 @@
-package solutions.empire.wallyces
+package solutions.empire.wallyces.authentication
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
@@ -16,6 +16,9 @@ import com.parse.ParseObject
 import com.parse.ParseQuery
 import com.parse.FindCallback
 import com.parse.ParseException
+import solutions.empire.wallyces.R
+import solutions.empire.wallyces.view.BuscarProfessorActivity
+import solutions.empire.wallyces.view.DashboardActivity
 
 
 class LoginActivity : AppCompatActivity() {

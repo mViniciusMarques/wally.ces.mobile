@@ -1,22 +1,21 @@
-package solutions.empire.wallyces
+package solutions.empire.wallyces.view
 
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.AsyncTask
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
-import bolts.Task
 import com.parse.ParseObject
 import com.parse.ParseQuery
 import com.parse.FindCallback
 import com.parse.ParseException
 import kotlinx.android.synthetic.main.activity_cadastro_professor.*
 import kotlinx.android.synthetic.main.inc_cadastro_cartao.*
+import solutions.empire.wallyces.R
 import solutions.empire.wallyces.model.CadastroSalaProfessorDTO
 
 

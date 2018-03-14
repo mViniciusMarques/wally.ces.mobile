@@ -1,6 +1,5 @@
-package solutions.empire.wallyces
+package solutions.empire.wallyces.view
 
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import kotlinx.android.synthetic.main.inc_busca_professor.*
 import android.widget.ArrayAdapter
@@ -12,6 +11,7 @@ import com.parse.ParseException
 import com.parse.ParseObject
 import com.parse.ParseQuery
 import kotlinx.android.synthetic.main.activity_buscar_professor.*
+import solutions.empire.wallyces.R
 import solutions.empire.wallyces.core.BaseActivity
 
 
@@ -33,7 +33,7 @@ class BuscarProfessorActivity : BaseActivity() {
 
     fun buscarProfessor() {
         btn_buscar_professor.setOnClickListener {
-            startActivity( Intent(this, QuadroProfessorActivity :: class.java));
+            startActivity( Intent(this, QuadroProfessorActivity:: class.java));
         }
     }
 
