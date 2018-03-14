@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "402557503866",
+    "firebase_url": "https://wallycesjf.firebaseio.com",
+    "project_id": "wallycesjf",
+    "storage_bucket": "wallycesjf.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:402557503866:android:a636d34c4695a87b",
+        "android_client_info": {
+          "package_name": "solutions.empire.wallyces"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "402557503866-9nh55fctkmjurepq3711482g9qvj7l3r.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDRJi_VcHTp3UiN0Pf5TLZnKYyLfIYJZCE"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

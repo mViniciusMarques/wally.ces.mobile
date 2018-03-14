@@ -1,0 +1,23 @@
+<resources>
+    <string name="app_name">Wally CES</string>
+
+    <!-- Formulario Login -->
+
+    <string name="input_email">E-mail</string>
+    <string name="input_senha">Senha</string>
+
+    <!-- Professor -->
+
+    <string name="lbl_professor">Professor</string>
+    <string name="lbl_buscar_professor">Buscar Professor</string>
+
+    <!-- Aluno -->
+
+    <!-- Botoes -->
+
+    <string name="btn_buscar">Buscar</string>
+    <string name="btn_entrar">Entrar</string>
+    <string name="btn_login_google_plus">Entrar com G+ </string>
+
+
+</resources>
