@@ -26,10 +26,11 @@ open class BaseActivity : AppCompatActivity(){
 
     override fun onCreate(savedInstanceState: Bundle?, persistentState: PersistableBundle?) {
         super.onCreate(savedInstanceState, persistentState)
+        primeiraGeracao()
 
     }
 
-    init {
+    fun primeiraGeracao() {
         this.sharedPreferences = this.getSharedPreferences(REPOSITORIO_SHARED_PREFERENCES,0)
         this.auth = FirebaseAuth(FirebaseApp.getInstance());
     }

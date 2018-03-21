@@ -26,9 +26,17 @@ public class App extends Application {
 
 
     private void inicializarParse() {
+// Usando a base caed
+//        Parse.initialize(new Parse.Configuration.Builder(this)
+//                .applicationId("IfxnM9CeknbXJ0n5voDO4wOLje6vdzURql0DfnVT")
+//                .clientKey("1fk2b9w4AumiXlDhBrlV1FSSr2W23gDvyf4C5z6q")
+//                .server("https://parseapi.back4app.com/")
+//                .build()
+//        );
+
         Parse.initialize(new Parse.Configuration.Builder(this)
-                .applicationId("IfxnM9CeknbXJ0n5voDO4wOLje6vdzURql0DfnVT")
-                .clientKey("1fk2b9w4AumiXlDhBrlV1FSSr2W23gDvyf4C5z6q")
+                .applicationId("JxoYzBC4S0Y8rqAZ55qAVx4Mk7FPHckoCmw5cg6g")
+                .clientKey("l9X7Ewg4C1pmR2QdbnECptC4nuuijHiRs81bQXtq")
                 .server("https://parseapi.back4app.com/")
                 .build()
         );

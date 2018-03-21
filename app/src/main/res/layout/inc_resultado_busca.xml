@@ -17,23 +17,23 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="12"
         android:layout_marginTop="30dp"
-        android:orientation="horizontal">
+        android:layout_weight="12">
+
         <TextView
-            android:id="@+id/nome_professor"
-            android:layout_width="match_parent"
+            android:id="@+id/nome_professor_qp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="nome do professor" />
 
         <TextView
-            android:id="@+id/data_publicacao"
-            android:layout_width="match_parent"
+            android:id="@+id/data_publicacao_qp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:textAlignment="textEnd"
-            android:text="Data da Publicacao" />
+            android:text="Data da Publicacao"
+            android:textAlignment="textEnd" />
 
     </LinearLayout>
 

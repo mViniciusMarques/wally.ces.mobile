@@ -16,7 +16,7 @@
         android:textStyle="bold" />
 
     <TextView
-        android:id="@+id/txt_aviso"
+        android:id="@+id/txt_aviso_qp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"

@@ -69,20 +69,20 @@ class LoginActivity : AppCompatActivity() {
             if (requestCode == RC_SIGN_IN) {
                 startActivity(Intent(this, BuscarProfessorActivity::class.java));
             } else {
-
+                Toast.makeText(applicationContext, "Não foi possivel realizar login, tente novamente" , Toast.LENGTH_SHORT).show()
             }
     }
 
     fun entrarComProfessor() {
         btn_entrar_professor.setOnClickListener {
-            autenticarProfessor();
+            autenticarProfessor()
         }
     }
 
     fun entrarComAluno() {
-        entrarComGoogle.setOnClickListener(View.OnClickListener {
+        entrarComGoogle.setOnClickListener {
             logarComGoogle()
-        })
+        }
     }
 
 
@@ -91,7 +91,6 @@ class LoginActivity : AppCompatActivity() {
                 AuthUI.getInstance()
                         .createSignInIntentBuilder()
                         .setAvailableProviders(Arrays.asList(
-                               // AuthUI.IdpConfig.EmailBuilder().build(),
                                 AuthUI.IdpConfig.GoogleBuilder().build()
                         ))
                         .build(),
@@ -101,32 +100,46 @@ class LoginActivity : AppCompatActivity() {
     fun autenticarProfessor() {
         FirebaseAuth.getInstance().signInWithEmailAndPassword(input_email.text.toString(), input_senha.text.toString())
                 .addOnSuccessListener { authResult ->
-                    Log.e("SUCESSO_PROF", authResult.user.email)
-                    startActivity(Intent(this, DashboardActivity::class.java));
+
                     this.obterDadosProfessor(authResult.user.email!!)
                 }.addOnFailureListener { exception ->
-            Log.e("ERRO_PROF", exception.message);
-            Toast.makeText(this, "Usuario/Senha incorretos", Toast.LENGTH_SHORT).show();
+
+                 Toast.makeText(this, exception.message, Toast.LENGTH_SHORT).show();
         }
     }
 
     private fun obterDadosProfessor (email: String) {
         val query  = ParseQuery.getQuery<ParseObject>("professor");
-        val editor = prefs!!.edit();
-        query.findInBackground(object : FindCallback<ParseObject> {
-            override fun done(retorno: List<ParseObject>, parseException: ParseException?) {
-                if (parseException == null) {
-                    val professor =   retorno.filter { parseObject -> parseObject.getString("email").equals(email) }.single()
-                    editor.putString("professor_nome", professor.getString("nome"))
-                    editor.putString("professor_email", professor.getString("email"))
-                    editor.putString("professor_permissao", professor.getString("permissao"))
-                    editor.putString("professor_curso", professor.getString("curso"))
-                    editor.commit();
-                } else {
-                    Toast.makeText(applicationContext,"Erro ao obter dados do professor, verifique sua conexão!", Toast.LENGTH_SHORT).show()
-                }
+        query.findInBackground { retorno, parseException ->
+            if (parseException == null) {
+
+                val professor =   retorno.filter { parseObject -> parseObject.getString("email") == email }.single()
+                persistirUsuarioLocalmente(professor)
+                redirecionarParaDashboardComDados(professor)
+
+            } else {
+                Toast.makeText(applicationContext,parseException.message, Toast.LENGTH_SHORT).show()
             }
-        })
+        }
+    }
+
+    private fun redirecionarParaDashboardComDados(professor: ParseObject) {
+        intent = Intent(this, DashboardActivity::class.java)
+        intent.putExtra("professor_nome", professor.getString("nome"))
+        intent.putExtra("professor_email", professor.getString("email"))
+        intent.putExtra("professor_permissao", professor.getString("permissao"))
+        intent.putExtra("professor_curso", professor.getString("curso"))
+
+        startActivity(intent)
+    }
+
+    private fun persistirUsuarioLocalmente(professor: ParseObject) {
+        val editor = prefs!!.edit();
+        editor.putString("professor_nome", professor.getString("nome"))
+        editor.putString("professor_email", professor.getString("email"))
+        editor.putString("professor_permissao", professor.getString("permissao"))
+        editor.putString("professor_curso", professor.getString("curso"))
+        editor.commit();
     }
 }
 

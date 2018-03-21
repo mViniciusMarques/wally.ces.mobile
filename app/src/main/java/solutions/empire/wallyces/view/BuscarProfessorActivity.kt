@@ -5,6 +5,9 @@ import kotlinx.android.synthetic.main.inc_busca_professor.*
 import android.widget.ArrayAdapter
 import android.content.Intent
 import android.os.AsyncTask
+import android.util.Log
+import android.view.View
+import android.widget.AdapterView
 import android.widget.Toast
 import com.parse.FindCallback
 import com.parse.ParseException
@@ -19,30 +22,39 @@ class BuscarProfessorActivity : BaseActivity() {
 
 
     var professoresRetornados: MutableList<String> = arrayListOf()
+    var professorSelecionado: String = "";
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_buscar_professor)
 
-        //obterProfessoresAutoComplete()
-        ProfessorService().execute()
         buscarProfessor()
+        obterProfessorSelecionado()
+        ProfessorService().execute()
         sair()
     }
 
 
     fun buscarProfessor() {
         btn_buscar_professor.setOnClickListener {
-            startActivity( Intent(this, QuadroProfessorActivity:: class.java));
+            intent = Intent(this, QuadroProfessorActivity::class.java)
+            intent.putExtra("professor_buscado", professorSelecionado)
+            startActivity(intent);
         }
     }
 
 
      fun sair() {
-        this.btn_sair.setOnClickListener { view ->
-            this.deslogar();
+        this.btn_sair.setOnClickListener {
+            this.deslogar()
         }
+    }
 
+    fun obterProfessorSelecionado() {
+        auto_input_nome_professor.onItemClickListener = AdapterView.OnItemClickListener { adapterView, view, posicao, id ->
+            professorSelecionado = auto_input_nome_professor.adapter.getItem(posicao).toString()
+            Log.e("PROFESSOR", auto_input_nome_professor.adapter.getItem(posicao).toString())
+        }
     }
 
 
@@ -65,17 +77,15 @@ class BuscarProfessorActivity : BaseActivity() {
 
         fun obterProfessores() {
             val query = ParseQuery<ParseObject>("professor")
-            query.findInBackground(object : FindCallback<ParseObject> {
-                override fun done(retorno: List<ParseObject>, parseException: ParseException?) {
-                    if (parseException == null) {
-                        retorno.forEach { parseObject: ParseObject ->
-                            professoresRetornados.add(parseObject.getString("nome"))
-                        }
-                    } else {
-                        Toast.makeText(applicationContext,"Erro ao obter disciplinas, verifique sua conexão!", Toast.LENGTH_SHORT).show()
+            query.findInBackground { retorno, parseException ->
+                if (parseException == null) {
+                    retorno.forEach { parseObject: ParseObject ->
+                        professoresRetornados.add(parseObject.getString("nome"))
                     }
+                } else {
+                    Toast.makeText(applicationContext,"Erro ao obter disciplinas, verifique sua conexão!", Toast.LENGTH_SHORT).show()
                 }
-            })
+            }
         }
 
         fun obterProfessorAutoComplete() {
