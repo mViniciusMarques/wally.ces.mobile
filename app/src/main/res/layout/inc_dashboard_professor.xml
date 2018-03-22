@@ -8,7 +8,7 @@
     <android.support.v7.widget.CardView
         android:id="@+id/cartao_cadastrar"
         android:layout_width="match_parent"
-        android:layout_height="173dp"
+        android:layout_height="150dp"
         android:elevation="10dp"
         app:cardCornerRadius="20dp"
         android:layout_marginTop="10dp"
@@ -29,35 +29,59 @@
     </android.support.v7.widget.CardView>
 
     <android.support.v7.widget.CardView
-        android:id="@+id/cartao_consultar"
+    android:id="@+id/cartao_consultar"
+    android:layout_width="match_parent"
+    android:layout_height="130dp"
+    android:elevation="10dp"
+    app:cardCornerRadius="20dp"
+    android:layout_marginTop="10dp"
+    android:layout_marginLeft="5dp"
+    android:layout_marginRight="5dp"
+    >
+
+    <TextView
+        android:id="@+id/lbl_aviso_dp"
         android:layout_width="match_parent"
-        android:layout_height="173dp"
+        android:layout_height="match_parent"
+        android:text="Consultar"
+        android:textAlignment="center"
+        android:gravity="center_vertical"
+        android:textSize="50sp"
+        android:textStyle="bold" />
+
+</android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/cartao_aviso"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
         android:elevation="10dp"
         app:cardCornerRadius="20dp"
         android:layout_marginTop="10dp"
         android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"
-        >
+        android:layout_marginRight="5dp">
 
         <TextView
-            android:id="@+id/lbl_consultar_dp"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="Consultar"
-            android:textAlignment="center"
-            android:gravity="center_vertical"
-            android:textSize="50sp"
-            android:textStyle="bold" />
+        android:id="@+id/lbl_consultar_dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="Aviso"
+        android:textAlignment="center"
+        android:gravity="center_vertical"
+        android:textSize="50sp"
+        android:textStyle="bold" />
 
     </android.support.v7.widget.CardView>
 
     <ImageView
         android:id="@+id/btn_sair_dp"
-        android:layout_width="82dp"
-        android:layout_height="52dp"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         android:layout_marginBottom="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="3dp"
-        android:background="@color/colorPrimary"
-        app:srcCompat="?android:attr/homeAsUpIndicator" />
+        android:layout_marginTop="50dp"
+        android:layout_marginRight="50dp"
+        android:layout_gravity="end"
+
+        android:background="@drawable/ic_logout" />
 </LinearLayout>

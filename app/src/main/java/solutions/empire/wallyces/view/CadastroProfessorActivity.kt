@@ -5,6 +5,7 @@ import android.content.SharedPreferences
 import android.os.AsyncTask
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
@@ -43,7 +44,13 @@ class CadastroProfessorActivity : AppCompatActivity()  {
         this.obterHorarioNoturno();
 
         prefs = this.getSharedPreferences(PREFS_NAME,0)
-        nome_professor.setText("Olá, " + prefs!!.getString("professor_nome",""))
+        var p = prefs!!.getString("professor_nome","");
+       // nome_professor.setText("Olá, " + prefs!!.getString("professor_nome",""))
+
+        var s = p.split(" ")
+        Log.e("Mario", s[0])
+
+        nome_professor.setText("Olá, " + s[0])
 
         this.obterHorarioSelecionado();
         this.obterSalaSelecionada();

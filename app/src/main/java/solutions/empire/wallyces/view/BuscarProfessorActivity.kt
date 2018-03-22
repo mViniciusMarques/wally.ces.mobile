@@ -37,9 +37,9 @@ class BuscarProfessorActivity : BaseActivity() {
 
     fun buscarProfessor() {
         btn_buscar_professor.setOnClickListener {
-            intent = Intent(this, QuadroProfessorActivity::class.java)
-            intent.putExtra("professor_buscado", professorSelecionado)
-            startActivity(intent);
+                intent = Intent(this, QuadroProfessorActivity::class.java)
+                intent.putExtra("professor_buscado", professorSelecionado)
+                startActivity(intent);
         }
     }
 

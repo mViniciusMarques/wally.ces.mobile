@@ -29,7 +29,8 @@
 
     <Button
         android:id="@+id/btn_buscar_professor"
-        android:layout_width="match_parent"
+        android:layout_width="300dp"
+        android:layout_gravity="center_horizontal"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:background="#8c1d1d"
