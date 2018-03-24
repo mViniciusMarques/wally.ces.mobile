@@ -1,19 +1,15 @@
 package solutions.empire.wallyces.core
 
-import android.app.Activity
 import android.content.Intent
 import android.content.SharedPreferences
-import android.content.res.Resources
 import android.os.Bundle
 import android.os.PersistableBundle
 import android.support.v7.app.AppCompatActivity
-import android.view.View
 import com.firebase.ui.auth.AuthUI
 import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.FirebaseAuth
 import solutions.empire.wallyces.authentication.LoginActivity
 import solutions.empire.wallyces.util.AppConstantes
-import solutions.empire.wallyces.view.CadastroProfessorActivity
 
 /**
  * Created by mviniciusmarques on 11/03/18.
@@ -27,7 +23,6 @@ open class BaseActivity : AppCompatActivity(){
     override fun onCreate(savedInstanceState: Bundle?, persistentState: PersistableBundle?) {
         super.onCreate(savedInstanceState, persistentState)
         primeiraGeracao()
-
     }
 
     fun primeiraGeracao() {
@@ -53,6 +48,7 @@ open class BaseActivity : AppCompatActivity(){
         manipuladorRepositorioLocal.putString(chave,valor)
         manipuladorRepositorioLocal.commit();
     }
+
 
 
 }

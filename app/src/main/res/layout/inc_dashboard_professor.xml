@@ -6,7 +6,7 @@
     android:orientation="vertical">
 
     <android.support.v7.widget.CardView
-        android:id="@+id/cartao_cadastrar"
+        android:id="@+id/cartao_cadastrar_dp"
         android:layout_width="match_parent"
         android:layout_height="150dp"
         android:elevation="10dp"
@@ -29,7 +29,7 @@
     </android.support.v7.widget.CardView>
 
     <android.support.v7.widget.CardView
-    android:id="@+id/cartao_consultar"
+    android:id="@+id/cartao_consultar_dp"
     android:layout_width="match_parent"
     android:layout_height="130dp"
     android:elevation="10dp"
@@ -52,7 +52,7 @@
 </android.support.v7.widget.CardView>
 
     <android.support.v7.widget.CardView
-        android:id="@+id/cartao_aviso"
+        android:id="@+id/cartao_aviso_dp"
         android:layout_width="match_parent"
         android:layout_height="100dp"
         android:elevation="10dp"
@@ -62,7 +62,7 @@
         android:layout_marginRight="5dp">
 
         <TextView
-        android:id="@+id/lbl_consultar_dp"
+        android:id="@+id/lbl_avisar_dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:text="Aviso"
@@ -83,5 +83,5 @@
         android:layout_marginRight="50dp"
         android:layout_gravity="end"
 
-        android:background="@drawable/ic_logout" />
+        android:background="@drawable/ic_off" />
 </LinearLayout>

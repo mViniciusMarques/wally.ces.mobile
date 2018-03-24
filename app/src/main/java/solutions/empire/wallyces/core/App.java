@@ -48,16 +48,19 @@ public class App extends Application {
             direcionarUsuarioLogadoPorTipo(auth);
         } else {
             Intent i = new Intent(this,LoginActivity.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK );
-            startActivity(i);        }
+            startActivity(i);
+        }
     }
 
     private void direcionarUsuarioLogadoPorTipo(FirebaseAuth auth) {
         Intent intent;
         if (auth.getCurrentUser().getDisplayName().isEmpty()) {
             intent = new Intent(this,DashboardActivity.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK );
+            intent.putExtra("tipo_usuario", "P");
             startActivity(intent);
         } else {
-            intent = new Intent(this,BuscarProfessorActivity.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK );
+            intent = new Intent(this,DashboardActivity.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK );
+            intent.putExtra("tipo_usuario", "A");
             startActivity(intent);
         }
     }

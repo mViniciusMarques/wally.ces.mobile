@@ -29,64 +29,37 @@ class LoginActivity : AppCompatActivity() {
     var prefs: SharedPreferences? = null;
 
     override fun onCreate(savedInstanceState: Bundle?) {
+
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
-        include_formulario_login.visibility = View.INVISIBLE;
-        entrarComGoogle.visibility = View.INVISIBLE;
-
+        inicializarComFiltrosOcultos()
         prefs = this.getSharedPreferences(PREFS_NAME,0)
 
     }
 
+
     override fun onStart() {
         super.onStart()
-        this.seletorDeCamposUsuarios();
-        this.entrarComAluno();
-        this.entrarComProfessor();
-    }
-
-    private fun seletorDeCamposUsuarios() {
-
-        radio_aluno.setOnClickListener(View.OnClickListener {
-            if (radio_aluno.isChecked) {
-                include_formulario_login.visibility = View.INVISIBLE;
-                entrarComGoogle.visibility = View.VISIBLE;
-                entrarComGoogle.y = 1200F
-            }
-        })
-
-        radio_professor.setOnClickListener(View.OnClickListener {
-            if (radio_professor.isChecked) {
-                include_formulario_login.visibility = View.VISIBLE;
-                entrarComGoogle.visibility = View.INVISIBLE;
-            }
-        })
-
+        this.entrarComAluno()
+        this.entrarComProfessor()
+        this.renderizarCamposLoginAluno()
+        this.renderizarCamposLoginProfessor()
     }
 
 
     public override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent) {
             if (requestCode == RC_SIGN_IN) {
-                startActivity(Intent(this, BuscarProfessorActivity::class.java));
+                intent = Intent(this, DashboardActivity::class.java )
+                intent.putExtra("tipo_usuario", "A")
+                startActivity(intent);
             } else {
                 Toast.makeText(applicationContext, "Não foi possivel realizar login, tente novamente" , Toast.LENGTH_SHORT).show()
             }
     }
 
-    fun entrarComProfessor() {
-        btn_entrar_professor.setOnClickListener {
-            autenticarProfessor()
-        }
-    }
-
-    fun entrarComAluno() {
-        entrarComGoogle.setOnClickListener {
-            logarComGoogle()
-        }
-    }
 
 
-    fun logarComGoogle() {
+    fun logarAlunoComGoogle() {
         startActivityForResult(
                 AuthUI.getInstance()
                         .createSignInIntentBuilder()
@@ -97,14 +70,12 @@ class LoginActivity : AppCompatActivity() {
                 RC_SIGN_IN)
     }
 
-    fun autenticarProfessor() {
+    fun autenticarProfessorFirebase() {
         FirebaseAuth.getInstance().signInWithEmailAndPassword(input_email.text.toString(), input_senha.text.toString())
                 .addOnSuccessListener { authResult ->
-
                     this.obterDadosProfessor(authResult.user.email!!)
                 }.addOnFailureListener { exception ->
-
-                 Toast.makeText(this, exception.message, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, exception.message, Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -129,6 +100,7 @@ class LoginActivity : AppCompatActivity() {
         intent.putExtra("professor_email", professor.getString("email"))
         intent.putExtra("professor_permissao", professor.getString("permissao"))
         intent.putExtra("professor_curso", professor.getString("curso"))
+        intent.putExtra("tipo_usuario", "P")
 
         startActivity(intent)
     }
@@ -140,6 +112,39 @@ class LoginActivity : AppCompatActivity() {
         editor.putString("professor_permissao", professor.getString("permissao"))
         editor.putString("professor_curso", professor.getString("curso"))
         editor.commit();
+    }
+
+    private fun renderizarCamposLoginProfessor() {
+        radio_professor.setOnClickListener({
+            include_formulario_login.visibility = View.VISIBLE;
+            entrarComGoogle.visibility = View.INVISIBLE;
+        })
+    }
+
+    private fun renderizarCamposLoginAluno() {
+        radio_aluno.setOnClickListener(View.OnClickListener {
+            include_formulario_login.visibility = View.INVISIBLE;
+            entrarComGoogle.visibility = View.VISIBLE;
+            entrarComGoogle.y = 1350F
+        })
+    }
+
+    private fun inicializarComFiltrosOcultos() {
+        include_formulario_login.visibility = View.INVISIBLE;
+        entrarComGoogle.visibility = View.INVISIBLE;
+    }
+
+
+    fun entrarComProfessor() {
+        btn_entrar_professor.setOnClickListener {
+            autenticarProfessorFirebase()
+        }
+    }
+
+    fun entrarComAluno() {
+        entrarComGoogle.setOnClickListener {
+            logarAlunoComGoogle()
+        }
     }
 }
 

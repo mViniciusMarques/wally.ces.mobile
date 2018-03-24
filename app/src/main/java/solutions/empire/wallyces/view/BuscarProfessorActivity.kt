@@ -1,5 +1,6 @@
 package solutions.empire.wallyces.view
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import kotlinx.android.synthetic.main.inc_busca_professor.*
 import android.widget.ArrayAdapter
@@ -13,7 +14,10 @@ import com.parse.FindCallback
 import com.parse.ParseException
 import com.parse.ParseObject
 import com.parse.ParseQuery
+import com.pchmn.materialchips.ChipsInput
+import com.pchmn.materialchips.model.Chip
 import kotlinx.android.synthetic.main.activity_buscar_professor.*
+import kotlinx.android.synthetic.main.inc_chips.*
 import solutions.empire.wallyces.R
 import solutions.empire.wallyces.core.BaseActivity
 
@@ -32,6 +36,15 @@ class BuscarProfessorActivity : BaseActivity() {
         obterProfessorSelecionado()
         ProfessorService().execute()
         sair()
+
+        val chipsInput = findViewById<ChipsInput>(R.id.chips_input) as ChipsInput
+        val contatosList = arrayListOf<Chip>( Chip("Blog Thiengo", "blog@thiengo.com.br˜") )
+
+       // chipsInput.setFilterableList( contatosList)
+        chips_input.addChip("DPP","Arquitetura de desenvolvimento")
+        chips_input.isFocusable = false;
+        chips_input.isShowChipDetailed = false
+//        chips_input.isFocusedByDefault = false;
     }
 
 
@@ -45,9 +58,7 @@ class BuscarProfessorActivity : BaseActivity() {
 
 
      fun sair() {
-        this.btn_sair.setOnClickListener {
-            this.deslogar()
-        }
+
     }
 
     fun obterProfessorSelecionado() {
@@ -97,5 +108,7 @@ class BuscarProfessorActivity : BaseActivity() {
     }
 
 }
+
+private operator fun <E> MutableList<E>.invoke(contatosList: ArrayList<Chip>) {}
 
 

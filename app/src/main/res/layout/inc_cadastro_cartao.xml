@@ -106,7 +106,7 @@
     <EditText
         android:id="@+id/input_aviso_cp"
         android:layout_width="match_parent"
-        android:layout_height="93dp"
+        android:layout_height="103dp"
         android:drawingCacheQuality="auto"
         android:elegantTextHeight="true"
         android:ems="10"

@@ -18,6 +18,7 @@ import kotlinx.android.synthetic.main.activity_cadastro_professor.*
 import kotlinx.android.synthetic.main.inc_cadastro_cartao.*
 import solutions.empire.wallyces.R
 import solutions.empire.wallyces.model.CadastroSalaProfessorDTO
+import solutions.empire.wallyces.model.Ocorrencia
 
 
 class CadastroProfessorActivity : AppCompatActivity()  {
@@ -25,37 +26,40 @@ class CadastroProfessorActivity : AppCompatActivity()  {
     var disciplinasRetornadas: MutableList<String> = arrayListOf()
     val horarios = ArrayList<String>()
     val salas = ArrayList<String>()
-    var cadastrarOcorrencia: CadastroSalaProfessorDTO = CadastroSalaProfessorDTO("","",false,"");
-    var prefs: SharedPreferences? = null;
+    var ocorrencia: Ocorrencia = Ocorrencia("undefinied","","","","","")
+    var prefs: SharedPreferences? = null
     val PREFS_NAME = "repositorio_local"
+    var nome: String? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_cadastro_professor)
-        Disciplina().execute();
-       // this.spinnerHorario();
-        this.spinnerSala();
-        this.inicializarAviso();
-        this.inicializarHorario();
+        Disciplina().execute()
+        // this.spinnerHorario();
+        this.spinnerSala()
+        this.inicializarAviso()
+        this.inicializarHorario()
+        this.obterDisciplinaSelecionada();
 
-        this.obterHorarioMatutino();
-        this.obterHorarioVespertino();
-        this.obterHorarioNoturno();
+        this.obterHorarioMatutino()
+        this.obterHorarioVespertino()
+        this.obterHorarioNoturno()
 
         prefs = this.getSharedPreferences(PREFS_NAME,0)
-        var p = prefs!!.getString("professor_nome","");
-       // nome_professor.setText("Olá, " + prefs!!.getString("professor_nome",""))
+        var p = prefs!!.getString("professor_nome","")
+        // nome_professor.setText("Olá, " + prefs!!.getString("professor_nome",""))
 
         var s = p.split(" ")
+        this.nome = p
         Log.e("Mario", s[0])
 
-        nome_professor.setText("Olá, " + s[0])
+        nome_professor.text = "Olá, " + s[0]
 
-        this.obterHorarioSelecionado();
-        this.obterSalaSelecionada();
+        this.obterHorarioSelecionado()
+        this.obterSalaSelecionada()
 
-        this.salvar();
+        this.salvar()
 
     }
 
@@ -72,25 +76,25 @@ class CadastroProfessorActivity : AppCompatActivity()  {
     private fun exibirHorario() {
       //  if( !turno_manha.isChecked || !turno_tarde.isChecked || !turno_noite.isChecked ) {
         if( !radio_turno.isDirty) {
-            lbl_horarios.visibility = View.GONE;
-            dropdown_horarios.visibility = View.GONE;
+            lbl_horarios.visibility = View.GONE
+            dropdown_horarios.visibility = View.GONE
         } else {
-            lbl_horarios.visibility = View.VISIBLE;
-            dropdown_horarios.visibility = View.VISIBLE;
+            lbl_horarios.visibility = View.VISIBLE
+            dropdown_horarios.visibility = View.VISIBLE
         }
     }
 
     private fun inicializarHorario() {
-        lbl_horarios.visibility = View.GONE;
-        dropdown_horarios.visibility = View.GONE;
-        this.exibirHorario();
+        lbl_horarios.visibility = View.GONE
+        dropdown_horarios.visibility = View.GONE
+        this.exibirHorario()
     }
 
     private fun inicializarAviso() {
         lbl_aviso.visibility = View.GONE
         input_aviso_cp.visibility = View.GONE
-        seletor_aviso.setOnClickListener { view ->
-            this.exibirAviso();
+        seletor_aviso.setOnClickListener {
+            this.exibirAviso()
         }
     }
 
@@ -105,50 +109,50 @@ class CadastroProfessorActivity : AppCompatActivity()  {
 
 
         val dataAdapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, salas)
-        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
 
         dropdown_sala.adapter = dataAdapter
     }
 
     private fun obterHorarioMatutino() {
-        turno_manha.setOnClickListener { view ->
-            this.horarios.clear();
+        turno_manha.setOnClickListener {
+            this.horarios.clear()
             horarios.add("Selecione...")
             horarios.add("07:30 - 08:50")
             horarios.add("09:10 - 10:30")
             horarios.add("10:50 - 12:30")
 
             val dataAdapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, horarios)
-            dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-            this.exibirHorario();
+            dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            this.exibirHorario()
             dropdown_horarios.adapter = dataAdapter
         }
     }
 
     private fun obterHorarioVespertino() {
-        turno_tarde.setOnClickListener { view ->
-            this.horarios.clear();
+        turno_tarde.setOnClickListener {
+            this.horarios.clear()
             horarios.add("Selecione...")
+            horarios.add("17:10 - 18:50")
 
 
             val dataAdapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, horarios)
-            dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-            this.exibirHorario();
+            dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            this.exibirHorario()
             dropdown_horarios.adapter = dataAdapter
         }
     }
 
     private fun obterHorarioNoturno() {
         turno_noite.setOnClickListener { view ->
-            this.horarios.clear();
+            this.horarios.clear()
             horarios.add("Selecione...")
-            horarios.add("17:10 - 18:50")
             horarios.add("18:50 - 20:30")
             horarios.add("20:50 - 22:30")
 
             val dataAdapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, horarios)
-            dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-            this.exibirHorario();
+            dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            this.exibirHorario()
             dropdown_horarios.adapter = dataAdapter
 
         }
@@ -157,11 +161,10 @@ class CadastroProfessorActivity : AppCompatActivity()  {
     private fun obterHorarioSelecionado() {
         dropdown_horarios.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
             override fun onNothingSelected(p0: AdapterView<*>?) {
-                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
             }
 
             override fun onItemSelected(p0: AdapterView<*>?, p1: View?, posicao: Int, id: Long) {
-               cadastrarOcorrencia.horario = horarios.get(posicao)
+                ocorrencia?.horario = horarios[posicao]
             }
         }
     }
@@ -169,76 +172,67 @@ class CadastroProfessorActivity : AppCompatActivity()  {
     private fun obterSalaSelecionada() {
         dropdown_sala.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
             override fun onNothingSelected(p0: AdapterView<*>?) {
-                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
             }
 
             override fun onItemSelected(p0: AdapterView<*>?, p1: View?, posicao: Int, id: Long) {
-               cadastrarOcorrencia.sala =  salas.get(posicao);
+               ocorrencia?.sala = salas[posicao]
+
             }
         }
     }
 
+    private fun montarOcorrenciaParaSalvar(): ParseObject {
+        val ocorrenciaParse = ParseObject("Ocorrencia")
+        ocorrenciaParse.put("nome", this.nome!!)
+        ocorrenciaParse.put("sala", ocorrencia?.sala)
+        ocorrenciaParse.put("aviso", ocorrencia?.aviso)
+        ocorrenciaParse.put("horario", ocorrencia?.horario)
+        ocorrenciaParse.put("disciplina", ocorrencia?.disciplina)
 
-    private fun montarSalvar() {
-
-        cadastrarOcorrencia.aviso = input_aviso_cp.text.toString();
-        val ocorrecia = ParseObject("Ocorrencia")
-        ocorrecia.put("nome", "Vinicius");
-        ocorrecia.put("sala", cadastrarOcorrencia.sala)
-        ocorrecia.put("horario", cadastrarOcorrencia.horario)
-        if(input_aviso_cp != null){
-            ocorrecia.put("aviso", cadastrarOcorrencia.aviso)
-        }
-        ocorrecia.saveInBackground()
-
+        return ocorrenciaParse
     }
+
 
     private fun salvar() {
         salvar_cp.setOnClickListener { view ->
-            this.montarSalvar()
-            intent  = Intent(this, QuadroProfessorActivity::class.java);
-            intent.putExtra("nome_professor", "Marcus")
-            intent.putExtra("sala", cadastrarOcorrencia.sala)
-            intent.putExtra("horario", cadastrarOcorrencia.horario)
-            startActivity(intent);
+            this.montarOcorrenciaParaSalvar().saveInBackground()
+            Toast.makeText(applicationContext,"Registro salvo com sucesso!", Toast.LENGTH_SHORT).show()
         }
 
     }
 
+    fun obterDisciplinaSelecionada() {
+        disciplina_professor.onItemClickListener = AdapterView.OnItemClickListener { adapterView, view, posicao, id ->
+            ocorrencia.disciplina = disciplina_professor.adapter.getItem(posicao).toString()
+        }
+    }
 
-
-    inner class Disciplina() : AsyncTask<Void, Void, String>(){
+    inner class Disciplina : AsyncTask<Void, Void, String>(){
 
         override fun doInBackground(vararg params: Void?): String? {
             obterDisciplinas()
             return null
         }
 
-        override fun onPreExecute() {
-            super.onPreExecute()
-        }
-
         override fun onPostExecute(result: String?) {
             super.onPostExecute(result)
-            obterDiscAutoComplete();
+            obterDiscAutoComplete()
         }
 
-        fun obterDisciplinas() {
+        private fun obterDisciplinas() {
             val query = ParseQuery<ParseObject>("disciplina")
-            query.findInBackground(object : FindCallback<ParseObject> {
-                override fun done(retorno: List<ParseObject>, parseException: ParseException?) {
-                    if (parseException == null) {
-                        retorno.forEach { parseObject: ParseObject ->
-                            disciplinasRetornadas.add(parseObject.getString("nome"))
-                        }
-                    } else {
-                        Toast.makeText(applicationContext,"Erro ao obter disciplinas, verifique sua conexão!", Toast.LENGTH_SHORT).show()
+            query.findInBackground { retorno, parseException ->
+                if (parseException == null) {
+                    retorno.forEach { parseObject: ParseObject ->
+                        disciplinasRetornadas.add(parseObject.getString("nome"))
                     }
+                } else {
+                    Toast.makeText(applicationContext,"Erro ao obter disciplinas, verifique sua conexão!", Toast.LENGTH_SHORT).show()
                 }
-            })
+            }
         }
 
-        fun obterDiscAutoComplete() {
+        private fun obterDiscAutoComplete() {
 
             val adapter = ArrayAdapter( applicationContext, android.R.layout.simple_list_item_1, disciplinasRetornadas)
             disciplina_professor.setAdapter(adapter)

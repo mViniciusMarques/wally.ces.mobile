@@ -25,10 +25,9 @@ class QuadroProfessorActivity : AppCompatActivity() {
         setContentView(R.layout.activity_quadro_professor)
         obterDados();
         obterProfessorBuscado()
-        if (intent.getStringExtra("nome_professor") == null ){
+//        if (intent.getStringExtra("nome_professor") == null ){
             QuadroProfessorService().execute()
-        }
-
+//        }
     }
 
 
@@ -55,8 +54,6 @@ class QuadroProfessorActivity : AppCompatActivity() {
     inner class QuadroProfessorService() : AsyncTask<Void, Void, String>(){
 
         override fun doInBackground(vararg params: Void?): String? {
-            //obterAvisoProfessor()
-            //obterProfessor()
             obterOcorrencia()
             return null
         }

@@ -7,6 +7,7 @@
     tools:context="solutions.empire.wallyces.view.BuscarProfessorActivity">
 
     <include
+        android:id="@+id/include4"
         layout="@layout/inc_busca_professor"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -24,6 +25,7 @@
         android:layout_height="2dp"
         android:layout_marginEnd="32dp"
         android:layout_marginStart="32dp"
+        android:layout_marginTop="24dp"
         android:background="#eddd00"
         android:elevation="1dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -31,36 +33,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.52" />
-
-    <TextView
-        android:id="@+id/lblAnuncio"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="12dp"
-        android:text="Anúncio Geral"
-        android:textSize="30sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/view" />
-
-    <TextView
-        android:id="@+id/txtAnuncio"
-        android:layout_width="355dp"
-        android:layout_height="93dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum ligula velit, lacinia at odio eu, posuere tempus est. Sed felis mi, fringilla eget dictum pellentesque, imperdiet ac quam. Praesent augue eros, dictum et orci vitae, fringilla scelerisque turpis. "
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.538"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/lblAnuncio"
-        app:layout_constraintVertical_bias="0.137" />
 
     <View
         android:id="@+id/view2"
@@ -76,35 +48,36 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.868" />
 
-    <ImageView
-        android:id="@+id/btn_sair"
-        android:layout_width="46dp"
-        android:layout_height="28dp"
+    <include
+        layout="@layout/inc_chips"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.951"
+        app:layout_constraintHorizontal_bias="0.108"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtAnuncio"
-        app:layout_constraintVertical_bias="0.771"
-        app:srcCompat="?android:attr/homeAsUpIndicator" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.595" />
 
     <TextView
-        android:id="@+id/lbl_sair"
-        android:layout_width="46dp"
-        android:layout_height="14dp"
-        android:layout_marginBottom="8dp"
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="124dp"
+        android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:text="Sair"
-        android:textAlignment="center"
-        android:textSize="12sp"
+        android:text="CES/JF - 2018"
+        android:textSize="50sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.951"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_sair"
-        app:layout_constraintVertical_bias="0.428" />
+        app:layout_constraintHorizontal_bias="0.511"
+        app:layout_constraintStart_toStartOf="parent" />
+
 
 </android.support.constraint.ConstraintLayout>

@@ -1,17 +1,26 @@
 package solutions.empire.wallyces.model
 
+import com.parse.ParseClassName
+
 /**
  * Created by mviniciusmarques on 10/03/18.
  */
-open class Professor constructor(curso: String, login: String, senha: String, nome: String, matricula: String) : Pessoa(nome, matricula) {
+@ParseClassName("professor")
+open class Professor {
 
-    var curso: String;
-    var login: String;
-    var senha: String;
+     var objectId: String
+     var nome: String
+     var permissao: String
+     var curso: String
+     var email: String
 
-    init {
-        this.curso = curso;
-        this.login = login;
-        this.senha = senha;
+    constructor(objectId: String, nome: String, permissao: String, curso: String, email: String) {
+        this.objectId = objectId
+        this.nome = nome
+        this.permissao = permissao
+        this.curso = curso
+        this.email = email
     }
+
+
 }
