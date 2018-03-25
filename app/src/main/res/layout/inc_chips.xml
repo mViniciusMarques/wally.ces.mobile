@@ -2,17 +2,18 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:chipcloud="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
-    <com.pchmn.materialchips.ChipsInput
-        android:id="@+id/chips_input"
-        android:layout_width="wrap_content"
+    <com.adroitandroid.chipcloud.ChipCloud
+        android:id="@+id/chip_cloud"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:clipToPadding="true"
-        android:focusable="false"
-        android:focusableInTouchMode="true"
-        app:chip_backgroundColor="#dcffe602"
-        app:chip_deletable="true" />
+        chipcloud:gravity="staggered"
+        android:layout_marginTop="15dp"
+        chipcloud:selectedColor="#1a4c16"
+        chipcloud:selectedFontColor="#FFF"
+
+        />
 
 </LinearLayout>

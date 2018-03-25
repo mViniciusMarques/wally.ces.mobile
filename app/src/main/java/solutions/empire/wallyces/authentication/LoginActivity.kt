@@ -1,32 +1,28 @@
 package solutions.empire.wallyces.authentication
 
-import android.support.v7.app.AppCompatActivity
-import android.os.Bundle
 import android.content.Intent
 import android.content.SharedPreferences
-import android.util.Log
+import android.os.Bundle
+import android.support.v7.app.AppCompatActivity
 import android.view.View
-import kotlinx.android.synthetic.main.activity_login.*
-import kotlinx.android.synthetic.main.inc_campos_login.*
-import com.firebase.ui.auth.AuthUI
-import java.util.*
 import android.widget.Toast
+import com.firebase.ui.auth.AuthUI
 import com.google.firebase.auth.FirebaseAuth
 import com.parse.ParseObject
 import com.parse.ParseQuery
-import com.parse.FindCallback
-import com.parse.ParseException
+import kotlinx.android.synthetic.main.activity_login.*
+import kotlinx.android.synthetic.main.inc_campos_login.*
 import solutions.empire.wallyces.R
-import solutions.empire.wallyces.view.BuscarProfessorActivity
 import solutions.empire.wallyces.view.DashboardActivity
+import java.util.*
 
 
 class LoginActivity : AppCompatActivity() {
 
 
-    val RC_SIGN_IN = 100;
+    val RC_SIGN_IN = 100
     val PREFS_NAME = "repositorio_local"
-    var prefs: SharedPreferences? = null;
+    var prefs: SharedPreferences? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -51,7 +47,7 @@ class LoginActivity : AppCompatActivity() {
             if (requestCode == RC_SIGN_IN) {
                 intent = Intent(this, DashboardActivity::class.java )
                 intent.putExtra("tipo_usuario", "A")
-                startActivity(intent);
+                startActivity(intent)
             } else {
                 Toast.makeText(applicationContext, "Não foi possivel realizar login, tente novamente" , Toast.LENGTH_SHORT).show()
             }
@@ -75,12 +71,12 @@ class LoginActivity : AppCompatActivity() {
                 .addOnSuccessListener { authResult ->
                     this.obterDadosProfessor(authResult.user.email!!)
                 }.addOnFailureListener { exception ->
-                    Toast.makeText(this, exception.message, Toast.LENGTH_SHORT).show();
-        }
+                    Toast.makeText(this, exception.message, Toast.LENGTH_SHORT).show()
+                }
     }
 
     private fun obterDadosProfessor (email: String) {
-        val query  = ParseQuery.getQuery<ParseObject>("professor");
+        val query  = ParseQuery.getQuery<ParseObject>("professor")
         query.findInBackground { retorno, parseException ->
             if (parseException == null) {
 
@@ -106,32 +102,32 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun persistirUsuarioLocalmente(professor: ParseObject) {
-        val editor = prefs!!.edit();
+        val editor = prefs!!.edit()
         editor.putString("professor_nome", professor.getString("nome"))
         editor.putString("professor_email", professor.getString("email"))
         editor.putString("professor_permissao", professor.getString("permissao"))
         editor.putString("professor_curso", professor.getString("curso"))
-        editor.commit();
+        editor.commit()
     }
 
     private fun renderizarCamposLoginProfessor() {
         radio_professor.setOnClickListener({
-            include_formulario_login.visibility = View.VISIBLE;
-            entrarComGoogle.visibility = View.INVISIBLE;
+            include_formulario_login.visibility = View.VISIBLE
+            entrarComGoogle.visibility = View.INVISIBLE
         })
     }
 
     private fun renderizarCamposLoginAluno() {
-        radio_aluno.setOnClickListener(View.OnClickListener {
-            include_formulario_login.visibility = View.INVISIBLE;
-            entrarComGoogle.visibility = View.VISIBLE;
-            entrarComGoogle.y = 1350F
+        radio_aluno.setOnClickListener({
+            include_formulario_login.visibility = View.INVISIBLE
+            entrarComGoogle.visibility = View.VISIBLE
+            entrarComGoogle.y = 1100F
         })
     }
 
     private fun inicializarComFiltrosOcultos() {
-        include_formulario_login.visibility = View.INVISIBLE;
-        entrarComGoogle.visibility = View.INVISIBLE;
+        include_formulario_login.visibility = View.INVISIBLE
+        entrarComGoogle.visibility = View.INVISIBLE
     }
 
 
