@@ -4,10 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="solutions.empire.wallyces.view.AvisoActivity">
+    tools:context="solutions.empire.wallyces.view.CadastroAvisoActivity">
 
     <TextView
-        android:id="@+id/lbl_aviso_titulo"
+        android:id="@+id/lbl_aviso_cadastro_titulo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
@@ -15,7 +15,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_weight="1"
-        android:text="Informações"
+        android:text="Aviso"
         android:textAlignment="center"
         android:textSize="30sp"
         android:textStyle="bold"
@@ -24,52 +24,53 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <include
-        android:id="@+id/include3"
-        layout="@layout/inc_aviso_geral"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="84dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.333"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recycleAviso"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
+    <View
+        android:id="@+id/view2"
+        android:layout_width="120dp"
+        android:layout_height="2dp"
+        android:layout_gravity="center_horizontal"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="272dp"
-        android:background="#0a000000"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginTop="32dp"
+        android:background="#737373"
+        android:elevation="1dp"
+        app:layout_constraintBottom_toTopOf="@+id/include5"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0">
+        app:layout_constraintTop_toBottomOf="@+id/lbl_aviso_cadastro_titulo"
+        app:layout_constraintVertical_bias="0.0" />
 
-    </android.support.v7.widget.RecyclerView>
-
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/adicionarAviso"
-        android:layout_width="55dp"
-        android:layout_height="64dp"
+    <include
+        android:id="@+id/include5"
+        layout="@layout/inc_formulario_cadastro_aviso"
+        android:layout_width="323dp"
+        android:layout_height="176dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="432dp"
-        android:clickable="true"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginTop="104dp"
+        app:layout_constraintBottom_toTopOf="@+id/btn_cadastrar_aviso"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.95"
+        app:layout_constraintHorizontal_bias="0.511"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.9"
-        app:srcCompat="@drawable/ic_add" />
+        app:layout_constraintVertical_bias="0.101" />
+
+    <Button
+        android:id="@+id/btn_cadastrar_aviso"
+        android:layout_width="0dp"
+        android:layout_height="59dp"
+        android:layout_marginBottom="40dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:text="Publicar"
+        android:textColor="#fff"
+        android:textStyle="bold"
+        android:background="#3e7229"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 
 </android.support.constraint.ConstraintLayout>

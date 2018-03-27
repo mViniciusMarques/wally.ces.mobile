@@ -1,5 +1,6 @@
 package solutions.empire.wallyces.view
 
+import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
@@ -67,5 +68,13 @@ class AvisoActivity : AppCompatActivity() {
         avisos.add(ac6);
 
         recycleAviso.adapter = AvisoAdapter(applicationContext, avisos);
+
+        redirecionarParaAdicionarAviso()
+    }
+
+    private fun redirecionarParaAdicionarAviso() {
+        adicionarAviso.setOnClickListener {
+            startActivity(Intent(this, CadastroAvisoActivity::class.java))
+        }
     }
 }

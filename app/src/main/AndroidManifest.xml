@@ -29,7 +29,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".view.AvisoActivity"></activity>
+        <activity android:name=".view.AvisoActivity" />
+        <activity android:name=".view.CadastroAvisoActivity"></activity>
     </application>
 
 </manifest>
