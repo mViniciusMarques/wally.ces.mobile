@@ -16,14 +16,14 @@ import kotlinx.android.synthetic.main.inc_resultado_busca.*
 class QuadroProfessorActivity : AppCompatActivity() {
 
 
-    var nomeProfessor= "";
-    var professor: ParseObject? = null;
-    var aviso: ParseObject? = null;
+    var nomeProfessor= ""
+    var professor: ParseObject? = null
+    var aviso: ParseObject? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_quadro_professor)
-        obterDados();
+        obterDados()
         obterProfessorBuscado()
 //        if (intent.getStringExtra("nome_professor") == null ){
             QuadroProfessorService().execute()
@@ -37,21 +37,21 @@ class QuadroProfessorActivity : AppCompatActivity() {
        val sala =  intent.getStringExtra("sala")
        val horario = intent.getStringExtra("horario")
 
-        input_disciplina_qp.setText(nome);
-        sala_professor_qp.setText(sala);
-        input_horario_qp.setText(horario);
+        input_disciplina_qp.text = nome
+        sala_professor_qp.text = sala
+        input_horario_qp.text = horario
 
     }
 
     fun obterProfessorBuscado() {
         nomeProfessor = intent.getStringExtra("professor_buscado")
-        val query  = ParseQuery.getQuery<ParseObject>("professor");
-        query.whereEqualTo("nome", nomeProfessor);
+        val query  = ParseQuery.getQuery<ParseObject>("professor")
+        query.whereEqualTo("nome", nomeProfessor)
 
     }
 
 
-    inner class QuadroProfessorService() : AsyncTask<Void, Void, String>(){
+    inner class QuadroProfessorService : AsyncTask<Void, Void, String>(){
 
         override fun doInBackground(vararg params: Void?): String? {
             obterOcorrencia()
@@ -60,13 +60,13 @@ class QuadroProfessorActivity : AppCompatActivity() {
 
         override fun onPreExecute() {
             super.onPreExecute()
-            loading_qp.visibility = View.VISIBLE;
-            loading_qp.bringToFront();
+            loading_qp.visibility = View.VISIBLE
+            loading_qp.bringToFront()
         }
 
         override fun onPostExecute(result: String?) {
             super.onPostExecute(result)
-            loading_qp.visibility = View.GONE;
+            loading_qp.visibility = View.GONE
         }
 
         fun obterOcorrencia() {
@@ -82,13 +82,13 @@ class QuadroProfessorActivity : AppCompatActivity() {
         }
 
         private fun popularCamposComDadosRetornados(retornoParse: MutableList<ParseObject>) {
-            professor = retornoParse.first();
-            nome_professor_qp.setText(nomeProfessor)
-            data_publicacao_qp.setText(retornoParse.first().getString("createdAt"))
-            input_disciplina_qp.setText(retornoParse.first().getString("disciplina"));
-            sala_professor_qp.setText(retornoParse.first().getString("sala"));
-            input_horario_qp.setText(retornoParse.first().getString("horario"));
-            txt_aviso_qp.setText(retornoParse.first().getString("aviso"))
+            professor = retornoParse.first()
+            nome_professor_qp.text = nomeProfessor
+            data_publicacao_qp.text = retornoParse.first().getString("createdAt")
+            input_disciplina_qp.text = retornoParse.first().getString("disciplina")
+            sala_professor_qp.text = retornoParse.first().getString("sala")
+            input_horario_qp.text = retornoParse.first().getString("horario")
+            txt_aviso_qp.text = retornoParse.first().getString("aviso")
         }
 
     }

@@ -86,7 +86,7 @@ class BuscarProfessorActivity : BaseActivity() {
 
         override fun doInBackground(vararg params: Void?): String? {
             obterProfessores()
-            obterChipsDisciplinas()
+            obterChips()
             return null
         }
 
@@ -113,27 +113,38 @@ class BuscarProfessorActivity : BaseActivity() {
             auto_input_nome_professor.setAdapter(adapter)
         }
 
-        private fun obterChipsDisciplinas() {
-            //   val disciplinaQuery = ParseQuery<ParseObject>("disciplina")
-            val ocorrenciaQuery = ParseQuery<ParseObject>("Ocorrencia")
-            ocorrenciaQuery.findInBackground { retorno, parseException ->
-                if (parseException == null) {
-                    retorno.forEach { parseObject: ParseObject ->
-                        Log.e("REL", parseObject.getString("disciplina"))
-                    }
-                }
-
-                val innerQuery = ParseQuery.getQuery<ParseObject>("disciplina")
-                innerQuery.whereExists("label")
-
-                val query = ParseQuery.getQuery<ParseObject>("Ocorrencia")
-                query.whereMatchesQuery ("disciplina", innerQuery)
-                query.findInBackground { commentList, e ->
-                        Log.e("REL-II", commentList.size.toString())
+        private fun obterChips() {
+          //  val ocorrenciaQuery = ParseQuery<ParseObject>("Ocorrencia")
+            val disciplinaaQuery = ParseQuery<ParseObject>("disciplina")
+            val query = ParseQuery.getQuery<ParseObject>("Ocorrencia")
+            query.include("disciplina")
+            //query.include("City.Country")
+            query.whereEqualTo("objectId", "kNCEjr8kdJ").findInBackground { retorno, e ->
+                retorno.forEach { parseObject: ParseObject? ->
+                    Log.e("DUMBASS", parseObject?.getString("disciplina"))
                 }
             }
+
         }
 
+//        private fun obterChips() {
+//            val ocorrenciaQuery = ParseQuery<ParseObject>("Ocorrencia")
+//            val disciplinaaQuery = ParseQuery<ParseObject>("disciplina")
+//            ocorrenciaQuery.whereExists("disciplina")
+//            Log.e("FOIOCAOII", ocorrenciaQuery.count().toString())
+//            Log.e("FOIOCAOIII", disciplinaaQuery.count().toString())
+//            disciplinaaQuery.whereContainsAll("nome", ocorrenciaQuery.find().)
+//            Log.e("FOIOCAO", disciplinaaQuery.count().toString())
+//            disciplinaaQuery.findInBackground { retorno , exp ->
+//                if(exp != null) {
+//                    retorno.forEach { parseObject: ParseObject? ->
+//                        Log.e("DUMBASS", parseObject?.getString("label"))
+//                    }
+//                } else {
+//                    Log.e("DUMBASS", "DEU RUIM")
+//                }
+//            }
+//        }
     }
 }
 
