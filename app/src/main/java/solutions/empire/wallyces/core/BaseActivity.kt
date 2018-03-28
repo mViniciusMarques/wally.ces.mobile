@@ -17,8 +17,8 @@ import solutions.empire.wallyces.util.AppConstantes
 open class BaseActivity : AppCompatActivity(){
 
     val REPOSITORIO_SHARED_PREFERENCES = "repositorio_local_shared_preferences"
-    var sharedPreferences: SharedPreferences? = null;
-    var auth: FirebaseAuth? = null;
+    var sharedPreferences: SharedPreferences? = null
+    var auth: FirebaseAuth? = null
 
     override fun onCreate(savedInstanceState: Bundle?, persistentState: PersistableBundle?) {
         super.onCreate(savedInstanceState, persistentState)
@@ -27,26 +27,27 @@ open class BaseActivity : AppCompatActivity(){
 
     fun primeiraGeracao() {
         this.sharedPreferences = this.getSharedPreferences(REPOSITORIO_SHARED_PREFERENCES,0)
-        this.auth = FirebaseAuth(FirebaseApp.getInstance());
+        this.auth = FirebaseAuth(FirebaseApp.getInstance())
     }
 
     protected open fun deslogar() {
-        AuthUI.getInstance().signOut(this);
-        startActivity(Intent(this, LoginActivity::class.java));
+        AuthUI.getInstance().signOut(this)
+        startActivity(Intent(this, LoginActivity::class.java))
     }
 
     protected open fun obterUsuarioLogado(): String{
-        return auth?.currentUser?.displayName.toString();
+        this.auth = FirebaseAuth(FirebaseApp.getInstance())
+        return auth?.currentUser?.displayName.toString()
     }
 
     protected open fun obterItemRepositorioLocal(chave: String): String {
-        return this.sharedPreferences!!.getString(chave, AppConstantes.STRING_VAZIA.toString());
+        return this.sharedPreferences!!.getString(chave, AppConstantes.STRING_VAZIA.toString())
     }
 
     protected open fun inserirItemRepositorioLocal(chave: String, valor: String) {
-        val manipuladorRepositorioLocal = sharedPreferences!!.edit();
+        val manipuladorRepositorioLocal = sharedPreferences!!.edit()
         manipuladorRepositorioLocal.putString(chave,valor)
-        manipuladorRepositorioLocal.commit();
+        manipuladorRepositorioLocal.commit()
     }
 
 

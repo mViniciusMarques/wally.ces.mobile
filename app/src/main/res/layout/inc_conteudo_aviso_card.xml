@@ -12,6 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Titulo"
+        android:textColor="#000"
         android:textSize="20sp"
         android:textAlignment="center" />
 
@@ -19,6 +20,7 @@
         android:id="@+id/descricao_card_aviso"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textColor="#000"
         android:text="descricao" />
 
     <LinearLayout
@@ -31,6 +33,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="professor"
+            android:textColor="#000"
             android:textSize="10sp" />
 
         <TextView
@@ -40,6 +43,7 @@
             android:layout_gravity="right"
             android:gravity="right"
             android:text="data"
+            android:textColor="#000"
             android:textAlignment="inherit"
             android:textSize="10sp" />
 

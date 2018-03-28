@@ -1,10 +1,9 @@
 package solutions.empire.wallyces.view
 
-import android.content.Intent
 import android.content.SharedPreferences
 import android.os.AsyncTask
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.View
 import android.widget.AdapterView
@@ -12,12 +11,9 @@ import android.widget.ArrayAdapter
 import android.widget.Toast
 import com.parse.ParseObject
 import com.parse.ParseQuery
-import com.parse.FindCallback
-import com.parse.ParseException
 import kotlinx.android.synthetic.main.activity_cadastro_professor.*
 import kotlinx.android.synthetic.main.inc_cadastro_cartao.*
 import solutions.empire.wallyces.R
-import solutions.empire.wallyces.model.CadastroSalaProfessorDTO
 import solutions.empire.wallyces.model.Ocorrencia
 
 
@@ -40,7 +36,7 @@ class CadastroProfessorActivity : AppCompatActivity()  {
         this.spinnerSala()
         this.inicializarAviso()
         this.inicializarHorario()
-        this.obterDisciplinaSelecionada();
+        this.obterDisciplinaSelecionada()
 
         this.obterHorarioMatutino()
         this.obterHorarioVespertino()
@@ -164,7 +160,7 @@ class CadastroProfessorActivity : AppCompatActivity()  {
             }
 
             override fun onItemSelected(p0: AdapterView<*>?, p1: View?, posicao: Int, id: Long) {
-                ocorrencia?.horario = horarios[posicao]
+                ocorrencia.horario = horarios[posicao]
             }
         }
     }
@@ -175,7 +171,7 @@ class CadastroProfessorActivity : AppCompatActivity()  {
             }
 
             override fun onItemSelected(p0: AdapterView<*>?, p1: View?, posicao: Int, id: Long) {
-               ocorrencia?.sala = salas[posicao]
+               ocorrencia.sala = salas[posicao]
 
             }
         }
@@ -184,17 +180,17 @@ class CadastroProfessorActivity : AppCompatActivity()  {
     private fun montarOcorrenciaParaSalvar(): ParseObject {
         val ocorrenciaParse = ParseObject("Ocorrencia")
         ocorrenciaParse.put("nome", this.nome!!)
-        ocorrenciaParse.put("sala", ocorrencia?.sala)
-        ocorrenciaParse.put("aviso", ocorrencia?.aviso)
-        ocorrenciaParse.put("horario", ocorrencia?.horario)
-        ocorrenciaParse.put("disciplina", ocorrencia?.disciplina)
+        ocorrenciaParse.put("sala", ocorrencia.sala)
+        ocorrenciaParse.put("aviso", ocorrencia.aviso)
+        ocorrenciaParse.put("horario", ocorrencia.horario)
+        ocorrenciaParse.put("disciplina", ocorrencia.disciplina)
 
         return ocorrenciaParse
     }
 
 
     private fun salvar() {
-        salvar_cp.setOnClickListener { view ->
+        salvar_cp.setOnClickListener {
             this.montarOcorrenciaParaSalvar().saveInBackground()
             Toast.makeText(applicationContext,"Registro salvo com sucesso!", Toast.LENGTH_SHORT).show()
         }

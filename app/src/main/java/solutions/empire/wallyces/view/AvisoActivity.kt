@@ -1,18 +1,21 @@
 package solutions.empire.wallyces.view
 
 import android.content.Intent
-import android.support.v7.app.AppCompatActivity
+import android.os.AsyncTask
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
-import solutions.empire.wallyces.R
-
+import com.google.firebase.FirebaseApp
+import com.google.firebase.auth.FirebaseAuth
+import com.parse.ParseObject
+import com.parse.ParseQuery
 import kotlinx.android.synthetic.main.activity_aviso.*
-
+import solutions.empire.wallyces.R
 import solutions.empire.wallyces.adapter.AvisoAdapter
+import solutions.empire.wallyces.core.BaseActivity
 import solutions.empire.wallyces.model.AvisoCard
 
 
-class AvisoActivity : AppCompatActivity() {
+class AvisoActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -60,21 +63,55 @@ class AvisoActivity : AppCompatActivity() {
         ac6.professor = "Professor Y"
         ac6.dataCriacao = "26/03/2018"
 
-        avisos.add(ac);
-        avisos.add(ac2);
-        avisos.add(ac3);
-        avisos.add(ac4);
-        avisos.add(ac5);
-        avisos.add(ac6);
+        avisos.add(ac)
+        avisos.add(ac2)
+        avisos.add(ac3)
+        avisos.add(ac4)
+        avisos.add(ac5)
+        avisos.add(ac6)
 
-        recycleAviso.adapter = AvisoAdapter(applicationContext, avisos);
+        recycleAviso.adapter = AvisoAdapter(applicationContext, avisos)
 
         redirecionarParaAdicionarAviso()
+        this.auth = FirebaseAuth(FirebaseApp.getInstance())
+      //  Log.e("KURIRIN", this.auth!!.currentUser.email)
+       // Log.e("KURIRIN2", this.obterItemRepositorioLocal("professor_nome"))
     }
 
     private fun redirecionarParaAdicionarAviso() {
         adicionarAviso.setOnClickListener {
             startActivity(Intent(this, CadastroAvisoActivity::class.java))
         }
+    }
+
+    inner class QuadroProfessorService : AsyncTask<Void, Void, String>(){
+
+        override fun doInBackground(vararg params: Void?): String? {
+            obterOcorrencia()
+            return null
+        }
+
+        fun obterOcorrencia() {
+            val query = ParseQuery<ParseObject>("Ocorrencia")
+           // query.whereEqualTo("nome",nomeProfessor)
+            query.findInBackground { retorno, parseException ->
+                if (parseException == null) {
+                    popularCamposComDadosRetornados(retorno)
+                } else {
+                    // Toast.makeText(applicationContext,"Erro ao obter disciplinas, verifique sua conexão!", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+
+        private fun popularCamposComDadosRetornados(retornoParse: MutableList<ParseObject>) {
+//            professor = retornoParse.first()
+//            nome_professor_qp.text = nomeProfessor
+//            data_publicacao_qp.text = retornoParse.first().getString("createdAt")
+//            input_disciplina_qp.text = retornoParse.first().getString("disciplina")
+//            sala_professor_qp.text = retornoParse.first().getString("sala")
+//            input_horario_qp.text = retornoParse.first().getString("horario")
+//            txt_aviso_qp.text = retornoParse.first().getString("aviso")
+        }
+
     }
 }
