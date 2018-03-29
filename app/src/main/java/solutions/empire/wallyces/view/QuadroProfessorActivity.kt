@@ -4,6 +4,7 @@ import android.os.AsyncTask
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.view.animation.Animation
 import com.parse.ParseObject
 import com.parse.ParseQuery
 import kotlinx.android.synthetic.main.inc_cartao_professor.*
@@ -25,9 +26,7 @@ class QuadroProfessorActivity : AppCompatActivity() {
         setContentView(R.layout.activity_quadro_professor)
         obterDados()
         obterProfessorBuscado()
-//        if (intent.getStringExtra("nome_professor") == null ){
-            QuadroProfessorService().execute()
-//        }
+        QuadroProfessorService().execute()
     }
 
 
@@ -50,6 +49,20 @@ class QuadroProfessorActivity : AppCompatActivity() {
 
     }
 
+    override fun onBackPressed() {
+        super.onBackPressed()
+        this.limparTela()
+
+    }
+
+    private fun limparTela() {
+        nome_professor_qp.text = ""
+        data_publicacao_qp.text =""
+        input_disciplina_qp.text = ""
+        sala_professor_qp.text = ""
+        txt_aviso_qp.text = ""
+    }
+
 
     inner class QuadroProfessorService : AsyncTask<Void, Void, String>(){
 
@@ -61,12 +74,11 @@ class QuadroProfessorActivity : AppCompatActivity() {
         override fun onPreExecute() {
             super.onPreExecute()
             loading_qp.visibility = View.VISIBLE
-            loading_qp.bringToFront()
+            loading_qp.isIndeterminate = true
         }
 
         override fun onPostExecute(result: String?) {
             super.onPostExecute(result)
-            loading_qp.visibility = View.GONE
         }
 
         fun obterOcorrencia() {
@@ -89,6 +101,7 @@ class QuadroProfessorActivity : AppCompatActivity() {
             sala_professor_qp.text = retornoParse.first().getString("sala")
             input_horario_qp.text = retornoParse.first().getString("horario")
             txt_aviso_qp.text = retornoParse.first().getString("aviso")
+            loading_qp.visibility = View.GONE
         }
 
     }

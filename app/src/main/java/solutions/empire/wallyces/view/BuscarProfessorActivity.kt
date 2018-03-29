@@ -24,6 +24,8 @@ class BuscarProfessorActivity : BaseActivity() {
 
     var professoresRetornados: MutableList<String> = arrayListOf()
     var professorSelecionado: String = ""
+    var chips: MutableList<String> = arrayListOf()
+    var translate: MutableList<String> = arrayListOf();
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,26 +37,25 @@ class BuscarProfessorActivity : BaseActivity() {
         obterProfessorSelecionado()
         ProfessorService().execute()
 
-        var chips: MutableList<String> = arrayListOf()
+
         chip_cloud.setGravity(FlowLayout.Gravity.STAGGERED)
         chip_cloud.setMode(ChipCloud.Mode.SINGLE)
-        chips.add("V.V.T")
-        chips.add("Qual. Soft")
-        chips.add("P.D.S")
-        chips.add("Sem.I")
-        chips.add("TCC")
-        chips.add("Met. Cien")
-        chips.add("Calc")
-        chips.add("EDM")
-        chips.add("Seg. Info")
+//        chips.add("Empire")
+//        chips.add("Qual. Soft")
+//        chips.add("P.D.S")
+//        chips.add("Sem.I")
+//        chips.add("TCC")
+//        chips.add("Met. Cien")
+//        chips.add("Calc")
+//        chips.add("EDM")
+//        chips.add("Seg. Info")
 
-        chip_cloud.addChips(chips.toTypedArray())
+     //   chip_cloud.addChips(chips.toTypedArray())
 
         chip_cloud.setChipListener(object : ChipListener {
             override fun chipSelected(index: Int) {
                 Log.e("PERL", chips[index])
-                lbl_chip_disciplina_bp.text = chips[index]
-
+                lbl_chip_disciplina_bp.text = translate[index]
             }
 
             override fun chipDeselected(index: Int) {
@@ -72,7 +73,6 @@ class BuscarProfessorActivity : BaseActivity() {
             startActivity(intent)
         }
     }
-
 
     fun obterProfessorSelecionado() {
         auto_input_nome_professor.onItemClickListener = AdapterView.OnItemClickListener { adapterView, view, posicao, id ->
@@ -114,37 +114,19 @@ class BuscarProfessorActivity : BaseActivity() {
         }
 
         private fun obterChips() {
-          //  val ocorrenciaQuery = ParseQuery<ParseObject>("Ocorrencia")
+            val ocorrenciaQuery = ParseQuery<ParseObject>("Ocorrencia")
             val disciplinaaQuery = ParseQuery<ParseObject>("disciplina")
-            val query = ParseQuery.getQuery<ParseObject>("Ocorrencia")
-            query.include("disciplina")
-            //query.include("City.Country")
-            query.whereEqualTo("objectId", "kNCEjr8kdJ").findInBackground { retorno, e ->
-                retorno.forEach { parseObject: ParseObject? ->
-                    Log.e("DUMBASS", parseObject?.getString("disciplina"))
+            val r =  disciplinaaQuery.whereMatchesKeyInQuery("nome","disciplina",ocorrenciaQuery )
+            r. findInBackground { objects, e ->
+                objects.forEach { parseObject: ParseObject? ->
+                    Log.e("IDWK", parseObject?.getString("nome") + " - " + parseObject?.getString("label"))
+                    translate.add(parseObject?.getString("nome").toString())
+                    chips.add(parseObject?.getString("label")!!)
                 }
+                chip_cloud.addChips(chips.toTypedArray())
             }
 
         }
-
-//        private fun obterChips() {
-//            val ocorrenciaQuery = ParseQuery<ParseObject>("Ocorrencia")
-//            val disciplinaaQuery = ParseQuery<ParseObject>("disciplina")
-//            ocorrenciaQuery.whereExists("disciplina")
-//            Log.e("FOIOCAOII", ocorrenciaQuery.count().toString())
-//            Log.e("FOIOCAOIII", disciplinaaQuery.count().toString())
-//            disciplinaaQuery.whereContainsAll("nome", ocorrenciaQuery.find().)
-//            Log.e("FOIOCAO", disciplinaaQuery.count().toString())
-//            disciplinaaQuery.findInBackground { retorno , exp ->
-//                if(exp != null) {
-//                    retorno.forEach { parseObject: ParseObject? ->
-//                        Log.e("DUMBASS", parseObject?.getString("label"))
-//                    }
-//                } else {
-//                    Log.e("DUMBASS", "DEU RUIM")
-//                }
-//            }
-//        }
     }
 }
 
