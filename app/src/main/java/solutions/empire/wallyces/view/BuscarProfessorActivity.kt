@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.AsyncTask
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
@@ -25,32 +26,22 @@ class BuscarProfessorActivity : BaseActivity() {
     var professoresRetornados: MutableList<String> = arrayListOf()
     var professorSelecionado: String = ""
     var chips: MutableList<String> = arrayListOf()
-    var translate: MutableList<String> = arrayListOf();
+    var translate: MutableList<String> = arrayListOf()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_buscar_professor)
 
-
-
         buscarProfessor()
         obterProfessorSelecionado()
         ProfessorService().execute()
 
-
         chip_cloud.setGravity(FlowLayout.Gravity.STAGGERED)
         chip_cloud.setMode(ChipCloud.Mode.SINGLE)
-//        chips.add("Empire")
-//        chips.add("Qual. Soft")
-//        chips.add("P.D.S")
-//        chips.add("Sem.I")
-//        chips.add("TCC")
-//        chips.add("Met. Cien")
-//        chips.add("Calc")
-//        chips.add("EDM")
-//        chips.add("Seg. Info")
 
-     //   chip_cloud.addChips(chips.toTypedArray())
+        loadingBuscarProfessor.visibility = View.VISIBLE
+        loadingBuscarProfessor.isIndeterminate = true
 
         chip_cloud.setChipListener(object : ChipListener {
             override fun chipSelected(index: Int) {
@@ -62,7 +53,6 @@ class BuscarProfessorActivity : BaseActivity() {
                 lbl_chip_disciplina_bp.text = "CES/JF - 2018"
             }
         })
-
 
     }
 
@@ -93,6 +83,7 @@ class BuscarProfessorActivity : BaseActivity() {
         override fun onPostExecute(result: String?) {
             super.onPostExecute(result)
             obterProfessorAutoComplete()
+
         }
 
         fun obterProfessores() {
@@ -105,6 +96,7 @@ class BuscarProfessorActivity : BaseActivity() {
                 } else {
                     Toast.makeText(applicationContext, "Erro ao obter disciplinas, verifique sua conexão!", Toast.LENGTH_SHORT).show()
                 }
+                loadingBuscarProfessor.visibility= View.GONE
             }
         }
 
@@ -116,6 +108,7 @@ class BuscarProfessorActivity : BaseActivity() {
         private fun obterChips() {
             val ocorrenciaQuery = ParseQuery<ParseObject>("Ocorrencia")
             val disciplinaaQuery = ParseQuery<ParseObject>("disciplina")
+
             val r =  disciplinaaQuery.whereMatchesKeyInQuery("nome","disciplina",ocorrenciaQuery )
             r. findInBackground { objects, e ->
                 objects.forEach { parseObject: ParseObject? ->

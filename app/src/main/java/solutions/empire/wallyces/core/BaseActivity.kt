@@ -35,7 +35,7 @@ open class BaseActivity : AppCompatActivity(){
         startActivity(Intent(this, LoginActivity::class.java))
     }
 
-    protected open fun obterUsuarioLogado(): String{
+    open fun obterUsuarioLogado(): String{
         this.auth = FirebaseAuth(FirebaseApp.getInstance())
         return auth?.currentUser?.displayName.toString()
     }
