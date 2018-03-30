@@ -1,20 +1,19 @@
 package solutions.empire.wallyces.view
 
 import android.os.AsyncTask
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import android.view.animation.Animation
 import com.parse.ParseObject
 import com.parse.ParseQuery
-import kotlinx.android.synthetic.main.inc_cartao_professor.*
-import solutions.empire.wallyces.R
 import kotlinx.android.synthetic.main.activity_quadro_professor.*
 import kotlinx.android.synthetic.main.inc_aviso_professor.*
+import kotlinx.android.synthetic.main.inc_cartao_professor.*
 import kotlinx.android.synthetic.main.inc_resultado_busca.*
+import solutions.empire.wallyces.R
+import solutions.empire.wallyces.core.BaseActivity
 
 
-class QuadroProfessorActivity : AppCompatActivity() {
+class QuadroProfessorActivity : BaseActivity() {
 
 
     var nomeProfessor= ""
@@ -75,10 +74,6 @@ class QuadroProfessorActivity : AppCompatActivity() {
             super.onPreExecute()
             loading_qp.visibility = View.VISIBLE
             loading_qp.isIndeterminate = true
-        }
-
-        override fun onPostExecute(result: String?) {
-            super.onPostExecute(result)
         }
 
         fun obterOcorrencia() {

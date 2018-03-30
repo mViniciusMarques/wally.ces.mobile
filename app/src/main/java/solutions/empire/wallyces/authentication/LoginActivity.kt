@@ -3,7 +3,6 @@ package solutions.empire.wallyces.authentication
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
 import android.view.View
 import android.widget.Toast
 import com.firebase.ui.auth.AuthUI
@@ -13,11 +12,12 @@ import com.parse.ParseQuery
 import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.android.synthetic.main.inc_campos_login.*
 import solutions.empire.wallyces.R
+import solutions.empire.wallyces.core.BaseActivity
 import solutions.empire.wallyces.view.DashboardActivity
 import java.util.*
 
 
-class LoginActivity : AppCompatActivity() {
+class LoginActivity : BaseActivity() {
 
 
     val RC_SIGN_IN = 100
@@ -30,6 +30,9 @@ class LoginActivity : AppCompatActivity() {
         setContentView(R.layout.activity_login)
         inicializarComFiltrosOcultos()
         prefs = this.getSharedPreferences(PREFS_NAME,0)
+
+        val actionBar = supportActionBar
+        actionBar!!.hide()
 
     }
 

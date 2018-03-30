@@ -3,7 +3,6 @@ package solutions.empire.wallyces.view
 import android.content.SharedPreferences
 import android.os.AsyncTask
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.View
 import android.widget.AdapterView
@@ -14,10 +13,11 @@ import com.parse.ParseQuery
 import kotlinx.android.synthetic.main.activity_cadastro_professor.*
 import kotlinx.android.synthetic.main.inc_cadastro_cartao.*
 import solutions.empire.wallyces.R
+import solutions.empire.wallyces.core.BaseActivity
 import solutions.empire.wallyces.model.Ocorrencia
 
 
-class CadastroProfessorActivity : AppCompatActivity()  {
+class CadastroProfessorActivity : BaseActivity()  {
 
     var disciplinasRetornadas: MutableList<String> = arrayListOf()
     val horarios = ArrayList<String>()

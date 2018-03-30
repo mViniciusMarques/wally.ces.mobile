@@ -23,6 +23,9 @@ open class BaseActivity : AppCompatActivity(){
     override fun onCreate(savedInstanceState: Bundle?, persistentState: PersistableBundle?) {
         super.onCreate(savedInstanceState, persistentState)
         primeiraGeracao()
+
+        val actionBar = supportActionBar
+        actionBar!!.hide()
     }
 
     fun primeiraGeracao() {

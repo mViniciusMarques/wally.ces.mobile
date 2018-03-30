@@ -1,13 +1,13 @@
 package solutions.empire.wallyces.view
 
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
 import com.parse.ParseObject
 import kotlinx.android.synthetic.main.activity_cadastro_aviso.*
 import kotlinx.android.synthetic.main.inc_formulario_cadastro_aviso.*
 import solutions.empire.wallyces.R
+import solutions.empire.wallyces.core.BaseActivity
 
-class CadastroAvisoActivity : AppCompatActivity() {
+class CadastroAvisoActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
