@@ -24,22 +24,25 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/editText"
-        android:layout_width="wrap_content"
+        android:id="@+id/titulo_sugestao_sb"
+        android:layout_width="312dp"
         android:layout_height="wrap_content"
+        android:hint="Titulo"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="40dp"
         android:ems="10"
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.493"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/lbl_sugestao" />
 
     <EditText
         android:id="@+id/modelo_celular_sb"
-        android:layout_width="wrap_content"
+        android:layout_width="312dp"
         android:layout_height="wrap_content"
+        android:hint="Modelo do celular"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
@@ -48,21 +51,97 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.503"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText" />
+        app:layout_constraintTop_toBottomOf="@+id/titulo_sugestao_sb" />
 
     <EditText
         android:id="@+id/descircao_sb"
-        android:layout_width="wrap_content"
-        android:layout_height="63dp"
+        android:layout_width="312dp"
+        android:layout_height="67dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="188dp"
         android:ems="10"
+        android:hint="Descreva sua sugestão ou relate bug"
         android:inputType="textMultiLine"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.503"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/modelo_celular_sb" />
+
+    <Button
+        android:id="@+id/btn_notificar_bug_sb"
+        style="@style/FirebaseUI.Button"
+        android:layout_width="312dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="Notificar"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/descircao_sb" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="Sugestão/Bug em:"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.145"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/modelo_celular_sb" />
+
+    <CheckBox
+        android:id="@+id/chk_layout"
+        android:layout_width="129dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="48dp"
+        android:layout_marginTop="64dp"
+        android:text="Layout"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/modelo_celular_sb" />
+
+    <CheckBox
+        android:id="@+id/chk_inconsistencia"
+        android:layout_width="129dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="48dp"
+        android:layout_marginTop="24dp"
+        android:text="Inconsistencia"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/chk_layout" />
+
+    <CheckBox
+        android:id="@+id/chk_perfomance"
+        android:layout_width="129dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="64dp"
+        android:text="Perfomance"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/chk_layout"
+        app:layout_constraintTop_toBottomOf="@+id/modelo_celular_sb" />
+
+    <CheckBox
+        android:id="@+id/chk_disponibilidade"
+        android:layout_width="129dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="24dp"
+        android:text="Disponibilidade"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/chk_inconsistencia"
+        app:layout_constraintTop_toBottomOf="@+id/chk_perfomance" />
 
 
 </android.support.constraint.ConstraintLayout>

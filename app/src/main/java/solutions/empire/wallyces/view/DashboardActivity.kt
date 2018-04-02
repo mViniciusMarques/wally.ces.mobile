@@ -21,6 +21,8 @@ class DashboardActivity : BaseActivity() {
 
         setContentView(R.layout.activity_dashboard)
 
+        this.sugestaoAluno()
+        this.sugestaoProfessor()
         this.consultarAvisoAluno()
         this.consultarOcorrenciaAluno()
 
@@ -34,6 +36,17 @@ class DashboardActivity : BaseActivity() {
         this.sairProfessor()
     }
 
+    private fun sugestaoAluno() {
+        cartao_sugestao_da.setOnClickListener {
+            startActivity(Intent(this, SugestaoActivity::class.java))
+        }
+    }
+
+    private fun sugestaoProfessor() {
+        cartao_sugestao_dp.setOnClickListener {
+            startActivity(Intent(this, SugestaoActivity::class.java))
+        }
+    }
 
 
     fun sairProfessor() {
