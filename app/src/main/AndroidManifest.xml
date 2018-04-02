@@ -30,7 +30,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".view.AvisoActivity" />
-        <activity android:name=".view.CadastroAvisoActivity"></activity>
+        <activity android:name=".view.CadastroAvisoActivity" />
+        <activity android:name=".view.SugestaoActivity"></activity>
     </application>
 
 </manifest>

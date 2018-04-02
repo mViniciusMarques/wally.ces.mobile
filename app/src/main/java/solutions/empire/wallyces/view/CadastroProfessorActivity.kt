@@ -3,7 +3,7 @@ package solutions.empire.wallyces.view
 import android.content.SharedPreferences
 import android.os.AsyncTask
 import android.os.Bundle
-import android.util.Log
+import android.text.TextUtils
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
@@ -25,14 +25,13 @@ class CadastroProfessorActivity : BaseActivity()  {
     var ocorrencia: Ocorrencia = Ocorrencia("undefinied","","","","","")
     var prefs: SharedPreferences? = null
     val PREFS_NAME = "repositorio_local"
-    var nome: String? = null
+    var nome_professor_formatado: String? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_cadastro_professor)
-        Disciplina().execute()
-        // this.spinnerHorario();
+        CadastroProfessorService().execute()
         this.spinnerSala()
         this.inicializarAviso()
         this.inicializarHorario()
@@ -42,21 +41,44 @@ class CadastroProfessorActivity : BaseActivity()  {
         this.obterHorarioVespertino()
         this.obterHorarioNoturno()
 
-        prefs = this.getSharedPreferences(PREFS_NAME,0)
-        var p = prefs!!.getString("professor_nome","")
-        // nome_professor.setText("Olá, " + prefs!!.getString("professor_nome",""))
+        val actionBar = supportActionBar
+        actionBar!!.hide()
 
-        var s = p.split(" ")
-        this.nome = p
-        Log.e("Mario", s[0])
+        prefs = this.getSharedPreferences(PREFS_NAME,0)
+        var nome_completo_professor = prefs!!.getString("professor_nome","")
+        var s = nome_completo_professor.split(" ")
+        this.nome_professor_formatado = nome_completo_professor
 
         nome_professor.text = "Olá, " + s[0]
 
+        this.bloquearCamposPreLoading()
         this.obterHorarioSelecionado()
         this.obterSalaSelecionada()
 
         this.salvar()
+    }
 
+    private fun bloquearCamposPreLoading() {
+        loadingCadastroP.visibility = View.VISIBLE
+        loadingCadastroP.isIndeterminate = true
+        disciplina_professor.isEnabled = false
+        dropdown_horarios.isEnabled = false
+        seletor_aviso.isEnabled = false
+        dropdown_sala.isEnabled = false
+        turno_manha.isEnabled = false
+        turno_tarde.isEnabled = false
+        turno_noite.isEnabled = false
+    }
+
+    private fun desbloquearCamposPosLoading() {
+        loadingCadastroP.visibility = View.GONE
+        disciplina_professor.isEnabled = true
+        dropdown_horarios.isEnabled = true
+        seletor_aviso.isEnabled = true
+        dropdown_sala.isEnabled = true
+        turno_manha.isEnabled = true
+        turno_tarde.isEnabled = true
+        turno_noite.isEnabled = true
     }
 
     private fun exibirAviso() {
@@ -70,7 +92,6 @@ class CadastroProfessorActivity : BaseActivity()  {
     }
 
     private fun exibirHorario() {
-      //  if( !turno_manha.isChecked || !turno_tarde.isChecked || !turno_noite.isChecked ) {
         if( !radio_turno.isDirty) {
             lbl_horarios.visibility = View.GONE
             dropdown_horarios.visibility = View.GONE
@@ -140,7 +161,7 @@ class CadastroProfessorActivity : BaseActivity()  {
     }
 
     private fun obterHorarioNoturno() {
-        turno_noite.setOnClickListener { view ->
+        turno_noite.setOnClickListener {
             this.horarios.clear()
             horarios.add("Selecione...")
             horarios.add("18:50 - 20:30")
@@ -152,6 +173,14 @@ class CadastroProfessorActivity : BaseActivity()  {
             dropdown_horarios.adapter = dataAdapter
 
         }
+    }
+
+    private fun validarEntradaDeDados(): Boolean {
+        var obrigatoriedadeDisciplina = !TextUtils.isEmpty(disciplina_professor.text)
+        if(obrigatoriedadeDisciplina) {
+            return true
+        }
+        return false
     }
 
     private fun obterHorarioSelecionado() {
@@ -179,7 +208,7 @@ class CadastroProfessorActivity : BaseActivity()  {
 
     private fun montarOcorrenciaParaSalvar(): ParseObject {
         val ocorrenciaParse = ParseObject("Ocorrencia")
-        ocorrenciaParse.put("nome", this.nome!!)
+        ocorrenciaParse.put("nome", this.nome_professor_formatado!!)
         ocorrenciaParse.put("sala", ocorrencia.sala)
         ocorrenciaParse.put("aviso", ocorrencia.aviso)
         ocorrenciaParse.put("horario", ocorrencia.horario)
@@ -191,19 +220,22 @@ class CadastroProfessorActivity : BaseActivity()  {
 
     private fun salvar() {
         salvar_cp.setOnClickListener {
-            this.montarOcorrenciaParaSalvar().saveInBackground()
-            Toast.makeText(applicationContext,"Registro salvo com sucesso!", Toast.LENGTH_SHORT).show()
+            if ( validarEntradaDeDados() ) {
+                this.montarOcorrenciaParaSalvar().saveInBackground()
+                Toast.makeText(applicationContext,"Registro salvo com sucesso !", Toast.LENGTH_SHORT).show()
+            } else {
+                Toast.makeText(applicationContext,"Falta de campos obrigatórios !", Toast.LENGTH_SHORT).show()
+            }
         }
-
     }
 
-    fun obterDisciplinaSelecionada() {
-        disciplina_professor.onItemClickListener = AdapterView.OnItemClickListener { adapterView, view, posicao, id ->
+    private fun obterDisciplinaSelecionada() {
+        disciplina_professor.onItemClickListener = AdapterView.OnItemClickListener { _, _, posicao, _ ->
             ocorrencia.disciplina = disciplina_professor.adapter.getItem(posicao).toString()
         }
     }
 
-    inner class Disciplina : AsyncTask<Void, Void, String>(){
+    inner class CadastroProfessorService : AsyncTask<Void, Void, String>(){
 
         override fun doInBackground(vararg params: Void?): String? {
             obterDisciplinas()
@@ -217,22 +249,17 @@ class CadastroProfessorActivity : BaseActivity()  {
 
         private fun obterDisciplinas() {
             val query = ParseQuery<ParseObject>("disciplina")
-            query.findInBackground { retorno, parseException ->
-                if (parseException == null) {
+            query.findInBackground { retorno, _ ->
                     retorno.forEach { parseObject: ParseObject ->
                         disciplinasRetornadas.add(parseObject.getString("nome"))
                     }
-                } else {
-                    Toast.makeText(applicationContext,"Erro ao obter disciplinas, verifique sua conexão!", Toast.LENGTH_SHORT).show()
-                }
+             desbloquearCamposPosLoading()
             }
         }
 
         private fun obterDiscAutoComplete() {
-
             val adapter = ArrayAdapter( applicationContext, android.R.layout.simple_list_item_1, disciplinasRetornadas)
             disciplina_professor.setAdapter(adapter)
-
         }
     }
 }

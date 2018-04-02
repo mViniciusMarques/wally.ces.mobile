@@ -1,8 +1,11 @@
 package solutions.empire.wallyces.view
 
+import android.content.Intent
 import android.os.AsyncTask
 import android.os.Bundle
+import android.text.TextUtils
 import android.view.View
+import android.widget.Toast
 import com.parse.ParseObject
 import com.parse.ParseQuery
 import kotlinx.android.synthetic.main.activity_quadro_professor.*
@@ -25,6 +28,7 @@ class QuadroProfessorActivity : BaseActivity() {
         setContentView(R.layout.activity_quadro_professor)
         obterDados()
         obterProfessorBuscado()
+        validarEntradaSemProfessor()
         QuadroProfessorService().execute()
     }
 
@@ -48,10 +52,16 @@ class QuadroProfessorActivity : BaseActivity() {
 
     }
 
+    private fun validarEntradaSemProfessor() {
+        if(TextUtils.isEmpty(nomeProfessor)){
+            startActivity(Intent(this, DashboardActivity::class.java))
+            Toast.makeText(this, "É necessário entrar com um professor válido", Toast.LENGTH_SHORT).show()
+        }
+    }
+
     override fun onBackPressed() {
         super.onBackPressed()
         this.limparTela()
-
     }
 
     private fun limparTela() {
@@ -77,9 +87,10 @@ class QuadroProfessorActivity : BaseActivity() {
         }
 
         fun obterOcorrencia() {
-            val query = ParseQuery<ParseObject>("Ocorrencia")
-            query.whereEqualTo("nome",nomeProfessor)
-            query.findInBackground { retorno, parseException ->
+            val ocorrenciaQuery = ParseQuery<ParseObject>("Ocorrencia")
+            ocorrenciaQuery.whereEqualTo("nome",nomeProfessor)
+            ocorrenciaQuery.orderByDescending("createdAt")
+            ocorrenciaQuery.findInBackground { retorno, parseException ->
                 if (parseException == null) {
                     popularCamposComDadosRetornados(retorno)
                 } else {

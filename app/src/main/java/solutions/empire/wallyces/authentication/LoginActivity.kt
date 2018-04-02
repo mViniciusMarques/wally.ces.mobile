@@ -110,6 +110,7 @@ class LoginActivity : BaseActivity() {
         editor.putString("professor_email", professor.getString("email"))
         editor.putString("professor_permissao", professor.getString("permissao"))
         editor.putString("professor_curso", professor.getString("curso"))
+        editor.putString("tipo_usuario", "P")
         editor.commit()
     }
 
@@ -143,6 +144,9 @@ class LoginActivity : BaseActivity() {
     fun entrarComAluno() {
         entrarComGoogle.setOnClickListener {
             logarAlunoComGoogle()
+            val editor = prefs!!.edit()
+            editor.putString("tipo_usuario", "A")
+            editor.commit()
         }
     }
 }

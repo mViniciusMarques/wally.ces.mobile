@@ -3,6 +3,7 @@ package solutions.empire.wallyces.view
 import android.content.Intent
 import android.os.AsyncTask
 import android.os.Bundle
+import android.text.TextUtils
 import android.util.Log
 import android.view.View
 import android.widget.AdapterView
@@ -22,7 +23,6 @@ import solutions.empire.wallyces.core.BaseActivity
 
 class BuscarProfessorActivity : BaseActivity() {
 
-
     var professoresRetornados: MutableList<String> = arrayListOf()
     var professorSelecionado: String = ""
     var chips: MutableList<String> = arrayListOf()
@@ -37,12 +37,13 @@ class BuscarProfessorActivity : BaseActivity() {
         obterProfessorSelecionado()
         ProfessorService().execute()
 
+        inicializarChips()
+        desativarEdicaoDeCamposEAtivarLoading()
+    }
+
+    private fun inicializarChips() {
         chip_cloud.setGravity(FlowLayout.Gravity.STAGGERED)
         chip_cloud.setMode(ChipCloud.Mode.SINGLE)
-
-        loadingBuscarProfessor.visibility = View.VISIBLE
-        loadingBuscarProfessor.isIndeterminate = true
-
         chip_cloud.setChipListener(object : ChipListener {
             override fun chipSelected(index: Int) {
                 Log.e("PERL", chips[index])
@@ -53,22 +54,45 @@ class BuscarProfessorActivity : BaseActivity() {
                 lbl_chip_disciplina_bp.text = "CES/JF - 2018"
             }
         })
-
     }
 
-    fun buscarProfessor() {
-        btn_buscar_professor.setOnClickListener {
-            intent = Intent(this, QuadroProfessorActivity::class.java)
-            intent.putExtra("professor_buscado", professorSelecionado)
-            startActivity(intent)
+    private fun buscarProfessor() {
+            btn_buscar_professor.setOnClickListener {
+                if(validarCampoBusca()) {
+                intent = Intent(this, QuadroProfessorActivity::class.java)
+                intent.putExtra("professor_buscado", professorSelecionado)
+                startActivity(intent)
+            } else {
+                    Toast.makeText(this,"Campo de busca precisa ser preenchido", Toast.LENGTH_SHORT).show()
+                }
         }
     }
 
-    fun obterProfessorSelecionado() {
-        auto_input_nome_professor.onItemClickListener = AdapterView.OnItemClickListener { adapterView, view, posicao, id ->
+    private fun obterProfessorSelecionado() {
+        auto_input_nome_professor.onItemClickListener = AdapterView.OnItemClickListener { _, _, posicao, _ ->
             professorSelecionado = auto_input_nome_professor.adapter.getItem(posicao).toString()
             Log.e("PROFESSOR", auto_input_nome_professor.adapter.getItem(posicao).toString())
         }
+    }
+
+    private fun ativarEdicaoDeCamposEDesativarLoading() {
+        auto_input_nome_professor.isEnabled = true
+        btn_buscar_professor.isEnabled = true
+        loadingBuscarProfessor.visibility = View.GONE
+    }
+
+    private fun desativarEdicaoDeCamposEAtivarLoading() {
+        loadingBuscarProfessor.visibility = View.VISIBLE
+        loadingBuscarProfessor.isIndeterminate = true
+        auto_input_nome_professor.isEnabled = false
+        btn_buscar_professor.isEnabled = false
+    }
+
+    private fun validarCampoBusca(): Boolean {
+        if(!TextUtils.isEmpty(auto_input_nome_professor.text)){
+           return true
+        }
+        return false
     }
 
 
@@ -83,24 +107,19 @@ class BuscarProfessorActivity : BaseActivity() {
         override fun onPostExecute(result: String?) {
             super.onPostExecute(result)
             obterProfessorAutoComplete()
-
         }
 
-        fun obterProfessores() {
+        private fun obterProfessores() {
             val query = ParseQuery<ParseObject>("professor")
-            query.findInBackground { retorno, parseException ->
-                if (parseException == null) {
-                    retorno.forEach { parseObject: ParseObject ->
-                        professoresRetornados.add(parseObject.getString("nome"))
-                    }
-                } else {
-                    Toast.makeText(applicationContext, "Erro ao obter disciplinas, verifique sua conexão!", Toast.LENGTH_SHORT).show()
+            query.findInBackground { retorno, _ ->
+                retorno.forEach { parseObject: ParseObject ->
+                    professoresRetornados.add(parseObject.getString("nome"))
                 }
-                loadingBuscarProfessor.visibility= View.GONE
+                ativarEdicaoDeCamposEDesativarLoading()
             }
         }
 
-        fun obterProfessorAutoComplete() {
+       private  fun obterProfessorAutoComplete() {
             val adapter = ArrayAdapter(applicationContext, android.R.layout.simple_spinner_dropdown_item, professoresRetornados)
             auto_input_nome_professor.setAdapter(adapter)
         }
@@ -108,9 +127,8 @@ class BuscarProfessorActivity : BaseActivity() {
         private fun obterChips() {
             val ocorrenciaQuery = ParseQuery<ParseObject>("Ocorrencia")
             val disciplinaaQuery = ParseQuery<ParseObject>("disciplina")
-
             val r =  disciplinaaQuery.whereMatchesKeyInQuery("nome","disciplina",ocorrenciaQuery )
-            r. findInBackground { objects, e ->
+            r. findInBackground { objects, _ ->
                 objects.forEach { parseObject: ParseObject? ->
                     Log.e("IDWK", parseObject?.getString("nome") + " - " + parseObject?.getString("label"))
                     translate.add(parseObject?.getString("nome").toString())
