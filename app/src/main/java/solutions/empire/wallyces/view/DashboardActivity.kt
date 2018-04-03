@@ -18,8 +18,10 @@ class DashboardActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         setContentView(R.layout.activity_dashboard)
+
+        val actionBar = supportActionBar
+        actionBar!!.hide()
 
         this.sugestaoAluno()
         this.sugestaoProfessor()
@@ -52,28 +54,28 @@ class DashboardActivity : BaseActivity() {
     fun sairProfessor() {
         btn_sair_dp.setOnClickListener { view ->
             view.startAnimation(AnimationUtils.loadAnimation(this, R.anim.abc_slide_in_bottom) )
-            this.deslogar();
+            this.deslogar()
         }
     }
 
     fun sairAluno() {
         btn_sair_da.setOnClickListener { view ->
             view.startAnimation(AnimationUtils.loadAnimation(this, R.anim.fui_slide_out_left) )
-            this.deslogar();
+            this.deslogar()
         }
     }
 
     fun cadastrarOcorrenciaProfessor() {
         cartao_cadastrar_dp.setOnClickListener { view ->
             view.startAnimation(AnimationUtils.loadAnimation(this, R.anim.abc_grow_fade_in_from_bottom) )
-            startActivity(Intent(this, CadastroProfessorActivity::class.java));
+            startActivity(Intent(this, CadastroProfessorActivity::class.java))
         }
     }
 
     fun consultarOcorrenciaProfessor() {
         cartao_consultar_dp.setOnClickListener { view ->
             view.startAnimation(AnimationUtils.loadAnimation(this, R.anim.abc_grow_fade_in_from_bottom) )
-            startActivity(Intent(this, BuscarProfessorActivity::class.java));
+            startActivity(Intent(this, BuscarProfessorActivity::class.java))
         }
     }
 
