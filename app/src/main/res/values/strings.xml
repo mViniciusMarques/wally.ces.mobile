@@ -18,6 +18,7 @@
     <string name="btn_buscar">Buscar</string>
     <string name="btn_entrar">Entrar</string>
     <string name="btn_login_google_plus">Entrar com G+ </string>
+    <string name="PADRAO_DATA_PT_BR">dd/MM/yyy - HH:mm:ss</string>
 
 
 </resources>

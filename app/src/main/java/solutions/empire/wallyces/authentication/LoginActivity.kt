@@ -13,6 +13,8 @@ import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.android.synthetic.main.inc_campos_login.*
 import solutions.empire.wallyces.R
 import solutions.empire.wallyces.core.BaseActivity
+import solutions.empire.wallyces.dbParseTable.ProfessorTableEnum
+import solutions.empire.wallyces.util.AppConstantes
 import solutions.empire.wallyces.view.DashboardActivity
 import java.util.*
 
@@ -52,7 +54,7 @@ class LoginActivity : BaseActivity() {
                 intent.putExtra("tipo_usuario", "A")
                 startActivity(intent)
             } else {
-                Toast.makeText(applicationContext, "Não foi possivel realizar login, tente novamente" , Toast.LENGTH_SHORT).show()
+                Toast.makeText(applicationContext, AppConstantes.ERRO_LOGIN.toString() , Toast.LENGTH_SHORT).show()
             }
     }
 
@@ -79,14 +81,14 @@ class LoginActivity : BaseActivity() {
     }
 
     private fun obterDadosProfessor (email: String) {
-        val query  = ParseQuery.getQuery<ParseObject>("professor")
+        val query  = ParseQuery.getQuery<ParseObject>(ProfessorTableEnum.TABELA_PROFESSO.toString())
         query.findInBackground { retorno, parseException ->
             if (parseException == null) {
-
-                val professor =   retorno.filter { parseObject -> parseObject.getString("email") == email }.single()
+                val professor = retorno.single { parseObject ->
+                    parseObject.getString(ProfessorTableEnum.EMAIL.toString()) == email
+                }
                 persistirUsuarioLocalmente(professor)
                 redirecionarParaDashboardComDados(professor)
-
             } else {
                 Toast.makeText(applicationContext,parseException.message, Toast.LENGTH_SHORT).show()
             }
@@ -95,10 +97,10 @@ class LoginActivity : BaseActivity() {
 
     private fun redirecionarParaDashboardComDados(professor: ParseObject) {
         intent = Intent(this, DashboardActivity::class.java)
-        intent.putExtra("professor_nome", professor.getString("nome"))
-        intent.putExtra("professor_email", professor.getString("email"))
-        intent.putExtra("professor_permissao", professor.getString("permissao"))
-        intent.putExtra("professor_curso", professor.getString("curso"))
+        intent.putExtra("professor_nome", professor.getString(ProfessorTableEnum.NOME.toString()))
+        intent.putExtra("professor_email", professor.getString(ProfessorTableEnum.EMAIL.toString()))
+        intent.putExtra("professor_permissao", professor.getString(ProfessorTableEnum.PERMISSAO.toString()))
+        intent.putExtra("professor_curso", professor.getString(ProfessorTableEnum.CURSO.toString()))
         intent.putExtra("tipo_usuario", "P")
 
         startActivity(intent)
@@ -106,10 +108,10 @@ class LoginActivity : BaseActivity() {
 
     private fun persistirUsuarioLocalmente(professor: ParseObject) {
         val editor = prefs!!.edit()
-        editor.putString("professor_nome", professor.getString("nome"))
-        editor.putString("professor_email", professor.getString("email"))
-        editor.putString("professor_permissao", professor.getString("permissao"))
-        editor.putString("professor_curso", professor.getString("curso"))
+        editor.putString("professor_nome", professor.getString(ProfessorTableEnum.NOME.toString()))
+        editor.putString("professor_email",  professor.getString(ProfessorTableEnum.EMAIL.toString()))
+        editor.putString("professor_permissao", professor.getString(ProfessorTableEnum.PERMISSAO.toString()))
+        editor.putString("professor_curso", professor.getString(ProfessorTableEnum.CURSO.toString()))
         editor.putString("tipo_usuario", "P")
         editor.commit()
     }

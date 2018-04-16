@@ -14,6 +14,7 @@ import kotlinx.android.synthetic.main.activity_buscar_professor.*
 import solutions.empire.wallyces.R
 import solutions.empire.wallyces.adapter.AvisoAdapter
 import solutions.empire.wallyces.core.BaseActivity
+import solutions.empire.wallyces.dbParseTable.AvisoTableEnum
 import solutions.empire.wallyces.model.AvisoCard
 import java.text.SimpleDateFormat
 
@@ -71,7 +72,7 @@ class AvisoActivity : BaseActivity() {
         }
 
         fun obterProfessorAviso() {
-            val avisoQuery = ParseQuery<ParseObject>("aviso")
+            val avisoQuery = ParseQuery<ParseObject>(AvisoTableEnum.TABELA_AVISO.toString())
             val professorQuery = ParseQuery<ParseObject>("professor")
             avisoQuery.whereExists("professor_id")
             avisoQuery.orderByAscending("prioridade_aviso")
@@ -83,10 +84,10 @@ class AvisoActivity : BaseActivity() {
             }
         }
 
-        fun obterAvisosEmBackgroundSetarItensNaTela() {
-            val avisoQuery = ParseQuery<ParseObject>("aviso")
-            avisoQuery.orderByAscending("prioridade_aviso")
-            avisoQuery.findInBackground { objects, e ->
+        private fun obterAvisosEmBackgroundSetarItensNaTela() {
+            val avisoQuery = ParseQuery<ParseObject>(AvisoTableEnum.TABELA_AVISO.toString())
+            avisoQuery.orderByAscending(AvisoTableEnum.PRIORIDADE.toString())
+            avisoQuery.findInBackground { objects, _ ->
                 objects.forEach { parseObject: ParseObject? ->
                     construirParametrosDaTela(parseObject)
                 }
@@ -97,11 +98,11 @@ class AvisoActivity : BaseActivity() {
 
         private fun construirParametrosDaTela(parseObject: ParseObject?) {
             var aviso = AvisoCard()
-            val format = SimpleDateFormat("dd/MM/yyy - HH:mm:ss")
-            aviso.titulo = parseObject?.getString("titulo")
-            aviso.descricao = parseObject?.getString("descricao")
+            val format = SimpleDateFormat(getString(R.string.PADRAO_DATA_PT_BR))
+            aviso.titulo = parseObject?.getString(AvisoTableEnum.TITULO.toString())
+            aviso.descricao = parseObject?.getString(AvisoTableEnum.DESCRICAO.toString())
             aviso.dataCriacao = format.format(parseObject?.createdAt!!)
-            aviso.professor = parseObject.getString("professor_id")
+            aviso.professor = parseObject.getString(AvisoTableEnum.PROFESSOR_ID.toString())
             avisos.add(aviso)
         }
 
