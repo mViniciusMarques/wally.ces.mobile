@@ -43,6 +43,11 @@ open class BaseActivity : AppCompatActivity(){
         return auth?.currentUser?.displayName.toString()
     }
 
+    open fun obterEmailUsuarioLogado(): String {
+        this.auth = FirebaseAuth(FirebaseApp.getInstance())
+        return auth?.currentUser?.email.toString()
+    }
+
     protected open fun obterItemRepositorioLocal(chave: String): String {
         return this.sharedPreferences!!.getString(chave, AppConstantes.STRING_VAZIA.toString())
     }

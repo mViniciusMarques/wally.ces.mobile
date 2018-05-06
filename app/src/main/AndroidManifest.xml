@@ -3,6 +3,12 @@
     package="solutions.empire.wallyces">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.FLASHLIGHT" />
+
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="true" />
 
     <application
         android:name=".core.App"
@@ -31,7 +37,12 @@
         </activity>
         <activity android:name=".view.AvisoActivity" />
         <activity android:name=".view.CadastroAvisoActivity" />
-        <activity android:name=".view.SugestaoActivity"></activity>
+        <activity android:name=".view.SugestaoActivity" />
+        <activity android:name=".view.CadastroAlunoActivity" />
+        <activity android:name=".view.CadastroProvaActivity" />
+        <activity android:name=".view.ProvaActivity" />
+        <activity android:name=".view.TransferenciaActivity" />
+        <activity android:name=".view.ConsumidorQrCodeActivity"></activity>
     </application>
 
 </manifest>

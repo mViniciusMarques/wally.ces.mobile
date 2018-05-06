@@ -72,7 +72,7 @@ class AvisoActivity : BaseActivity() {
         }
 
         fun obterProfessorAviso() {
-            val avisoQuery = ParseQuery<ParseObject>(AvisoTableEnum.TABELA_AVISO.toString())
+            val avisoQuery = ParseQuery<ParseObject>("aviso")
             val professorQuery = ParseQuery<ParseObject>("professor")
             avisoQuery.whereExists("professor_id")
             avisoQuery.orderByAscending("prioridade_aviso")
@@ -85,8 +85,8 @@ class AvisoActivity : BaseActivity() {
         }
 
         private fun obterAvisosEmBackgroundSetarItensNaTela() {
-            val avisoQuery = ParseQuery<ParseObject>(AvisoTableEnum.TABELA_AVISO.toString())
-            avisoQuery.orderByAscending(AvisoTableEnum.PRIORIDADE.toString())
+            val avisoQuery = ParseQuery<ParseObject>("aviso")
+            avisoQuery.orderByAscending("prioridade_aviso")
             avisoQuery.findInBackground { objects, _ ->
                 objects.forEach { parseObject: ParseObject? ->
                     construirParametrosDaTela(parseObject)
@@ -99,10 +99,10 @@ class AvisoActivity : BaseActivity() {
         private fun construirParametrosDaTela(parseObject: ParseObject?) {
             var aviso = AvisoCard()
             val format = SimpleDateFormat(getString(R.string.PADRAO_DATA_PT_BR))
-            aviso.titulo = parseObject?.getString(AvisoTableEnum.TITULO.toString())
-            aviso.descricao = parseObject?.getString(AvisoTableEnum.DESCRICAO.toString())
+            aviso.titulo = parseObject?.getString("titulo")
+            aviso.descricao = parseObject?.getString("descricao")
             aviso.dataCriacao = format.format(parseObject?.createdAt!!)
-            aviso.professor = parseObject.getString(AvisoTableEnum.PROFESSOR_ID.toString())
+            aviso.professor = parseObject.getString("objectId")
             avisos.add(aviso)
         }
 
