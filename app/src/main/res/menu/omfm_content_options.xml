@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- First button is the initial Fab of the menu -->
+    <!-- Title here can be empty if you don't to add any action in the main button -->
+    <item
+        android:id="@+id/main_option"
+        android:icon="@drawable/ic_add"
+        android:title="assa"/>
+
+    <!-- Options buttons of the Fab menu -->
+    <item
+        android:id="@+id/cadastrar_prova_fab"
+        android:icon="@drawable/common_full_open_on_phone"
+        android:title="Cadastrar Prova" />
+
+    <item
+        android:id="@+id/transferir_prova_fab"
+        android:icon="@drawable/common_full_open_on_phone"
+        android:title="Transferir Prova" />
+
+    <item
+        android:id="@+id/obter_prova_fab"
+        android:icon="@drawable/common_full_open_on_phone"
+        android:title="Obter Prova" />
+
+
+
+</menu>

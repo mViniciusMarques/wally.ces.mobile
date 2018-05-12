@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:text="@string/lbl_buscar_professor"
+        android:text="Buscar por professor"
         android:textSize="30sp"
         android:textStyle="bold" />
 
@@ -21,8 +21,6 @@
         android:layout_marginTop="50dp"
         android:layout_weight="1"
         android:ems="10"
-        android:textColor="#000"
-        android:popupBackground="#8c000000"
         android:hint="Nome do professor"
         android:inputType="textPersonName"
         android:singleLine="true" />

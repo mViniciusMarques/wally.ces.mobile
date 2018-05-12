@@ -15,6 +15,10 @@ import kotlinx.android.synthetic.main.inc_dashboard_aluno.*
 import kotlinx.android.synthetic.main.inc_dashboard_professor.*
 import solutions.empire.wallyces.R
 import solutions.empire.wallyces.core.BaseActivity
+import android.graphics.Typeface
+import android.widget.TextView
+
+
 
 class DashboardActivity : BaseActivity() {
 
@@ -48,7 +52,25 @@ class DashboardActivity : BaseActivity() {
         this.sairAluno()
         this.sairProfessor()
 
+
+        this.substituirFontePadrao()
+
         AlunoService().execute()
+    }
+
+    private fun substituirFontePadrao() {
+        val typeface = Typeface.createFromAsset(assets, "chalk.ttf")
+
+        lbl_sugestao_dp.typeface  = typeface
+        lbl_sugestao_da.typeface  = typeface
+        lbl_aviso_dp.typeface     = typeface
+        lbl_avisar_dp.typeface    = typeface
+        lbl_aviso_da.typeface     = typeface
+        lbl_consultar_da.typeface = typeface
+        lbl_prova_da.typeface     = typeface
+        lbl_cadastrar_dp.typeface = typeface
+
+
     }
 
     private fun sugestaoAluno() {
@@ -116,7 +138,7 @@ class DashboardActivity : BaseActivity() {
     fun cadastrarProvaProvisiorio() {
         cartao_prova_da.setOnClickListener { view ->
             view.startAnimation(AnimationUtils.loadAnimation(this, R.anim.abc_grow_fade_in_from_bottom) )
-            startActivity(Intent(this, CadastroProvaActivity::class.java))
+            startActivity(Intent(this, ProvaActivity::class.java))
         }
     }
 
@@ -150,7 +172,6 @@ class DashboardActivity : BaseActivity() {
             if(!isAlunoRegistrado) {
                 cadastrarAluno()
             } else {
-                Log.e("1957", alunoQuery.first.objectId)
                 val editor = prefs!!.edit()
                 editor.putString("aluno_object_id", alunoQuery.first.objectId)
                 editor.commit()

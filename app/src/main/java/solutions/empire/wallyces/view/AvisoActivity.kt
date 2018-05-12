@@ -21,30 +21,29 @@ import java.text.SimpleDateFormat
 
 class AvisoActivity : BaseActivity() {
 
-    val PREFS_NAME = "repositorio_local"
-    var prefs: SharedPreferences? = null
+    val PREFS_NAME                     = "repositorio_local"
+    var prefs:  SharedPreferences?     = null
     var avisos: MutableList<AvisoCard> = arrayListOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_aviso)
 
-        val manager = LinearLayoutManager(applicationContext)
-        manager.orientation = LinearLayoutManager.VERTICAL
+        val manager                = LinearLayoutManager(applicationContext)
+        manager.orientation        = LinearLayoutManager.VERTICAL
         recycleAviso.layoutManager = manager
 
-        val actionBar = supportActionBar
+        val actionBar              = supportActionBar
         actionBar!!.hide()
 
         QuadroProfessorService().execute()
 
         loadingAvisos.isIndeterminate = true
-        loadingAvisos.visibility = View.VISIBLE
+        loadingAvisos.visibility      = View.VISIBLE
 
 
-
-        recycleAviso.adapter = AvisoAdapter(applicationContext, avisos)
-        prefs = this.getSharedPreferences(PREFS_NAME,0)
+        recycleAviso.adapter       = AvisoAdapter(applicationContext, avisos)
+        prefs                      = this.getSharedPreferences(PREFS_NAME,0)
         redirecionarParaAdicionarAviso()
         renderizarBotaoAvisoComPermissao()
     }
@@ -72,7 +71,7 @@ class AvisoActivity : BaseActivity() {
         }
 
         fun obterProfessorAviso() {
-            val avisoQuery = ParseQuery<ParseObject>("aviso")
+            val avisoQuery     = ParseQuery<ParseObject>("aviso")
             val professorQuery = ParseQuery<ParseObject>("professor")
             avisoQuery.whereExists("professor_id")
             avisoQuery.orderByAscending("prioridade_aviso")
@@ -97,12 +96,12 @@ class AvisoActivity : BaseActivity() {
         }
 
         private fun construirParametrosDaTela(parseObject: ParseObject?) {
-            var aviso = AvisoCard()
-            val format = SimpleDateFormat(getString(R.string.PADRAO_DATA_PT_BR))
-            aviso.titulo = parseObject?.getString("titulo")
-            aviso.descricao = parseObject?.getString("descricao")
+            var aviso         = AvisoCard()
+            val format        = SimpleDateFormat(getString(R.string.PADRAO_DATA_PT_BR))
+            aviso.titulo      = parseObject?.getString("titulo")
+            aviso.descricao   = parseObject?.getString("descricao")
             aviso.dataCriacao = format.format(parseObject?.createdAt!!)
-            aviso.professor = parseObject.getString("objectId")
+            aviso.professor   = parseObject.getString("objectId")
             avisos.add(aviso)
         }
 

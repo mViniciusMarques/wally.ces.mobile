@@ -1,6 +1,7 @@
 package solutions.empire.wallyces.view
 
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.AsyncTask
 import android.os.Bundle
 import android.text.TextUtils
@@ -24,14 +25,20 @@ import solutions.empire.wallyces.core.BaseActivity
 class BuscarProfessorActivity : BaseActivity() {
 
     var professoresRetornados: MutableList<String> = arrayListOf()
-    var professorSelecionado: String = ""
-    var chips: MutableList<String> = arrayListOf()
-    var translate: MutableList<String> = arrayListOf()
+    var professorSelecionado:  String              = ""
+    var chips:                 MutableList<String> = arrayListOf()
+    var translate:             MutableList<String> = arrayListOf()
+    val PREFS_NAME                                 = "repositorio_local"
+    var prefs:                 SharedPreferences?  = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_buscar_professor)
+
+        prefs = this.getSharedPreferences(PREFS_NAME,0)
+        val actionBar = supportActionBar
+        actionBar!!.hide()
 
         buscarProfessor()
         obterProfessorSelecionado()
@@ -73,6 +80,13 @@ class BuscarProfessorActivity : BaseActivity() {
             professorSelecionado = auto_input_nome_professor.adapter.getItem(posicao).toString()
             Log.e("PROFESSOR", auto_input_nome_professor.adapter.getItem(posicao).toString())
         }
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        intent = Intent(this, DashboardActivity::class.java)
+        intent.putExtra("tipo_usuario", prefs?.getString("tipo_usuario",""))
+        startActivity(Intent(intent))
     }
 
     private fun ativarEdicaoDeCamposEDesativarLoading() {

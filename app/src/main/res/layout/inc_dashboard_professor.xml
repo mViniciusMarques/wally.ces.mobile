@@ -8,10 +8,10 @@
     <android.support.v7.widget.CardView
         android:id="@+id/cartao_cadastrar_dp"
         android:layout_width="match_parent"
-        android:layout_height="150dp"
+        android:layout_height="100dp"
         android:elevation="10dp"
         app:cardCornerRadius="20dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="20dp"
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
         >
@@ -20,10 +20,12 @@
             android:id="@+id/lbl_cadastrar_dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="Cadastrar"
+            android:text="CADASTRAR"
             android:textAlignment="center"
+            android:background="@drawable/backpc"
             android:gravity="center_vertical"
-            android:textSize="50sp"
+            android:textSize="40sp"
+            android:textColor="@color/white"
             android:textStyle="bold" />
 
     </android.support.v7.widget.CardView>
@@ -31,10 +33,10 @@
     <android.support.v7.widget.CardView
     android:id="@+id/cartao_consultar_dp"
     android:layout_width="match_parent"
-    android:layout_height="130dp"
+    android:layout_height="100dp"
     android:elevation="10dp"
     app:cardCornerRadius="20dp"
-    android:layout_marginTop="10dp"
+    android:layout_marginTop="20dp"
     android:layout_marginLeft="5dp"
     android:layout_marginRight="5dp"
     >
@@ -43,10 +45,12 @@
         android:id="@+id/lbl_aviso_dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Consultar"
+        android:text="CONSULTAR"
+        android:background="@drawable/backpc"
         android:textAlignment="center"
         android:gravity="center_vertical"
-        android:textSize="50sp"
+        android:textSize="40sp"
+        android:textColor="@color/white"
         android:textStyle="bold" />
 
 </android.support.v7.widget.CardView>
@@ -57,7 +61,7 @@
         android:layout_height="100dp"
         android:elevation="10dp"
         app:cardCornerRadius="20dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="20dp"
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp">
 
@@ -65,10 +69,12 @@
         android:id="@+id/lbl_avisar_dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Aviso"
+        android:text="AVISAR"
+            android:background="@drawable/backpc"
         android:textAlignment="center"
         android:gravity="center_vertical"
-        android:textSize="50sp"
+            android:textSize="40sp"
+            android:textColor="@color/white"
         android:textStyle="bold" />
 
     </android.support.v7.widget.CardView>
@@ -76,10 +82,11 @@
     <android.support.v7.widget.CardView
         android:id="@+id/cartao_sugestao_dp"
         android:layout_width="match_parent"
-        android:layout_height="70dp"
+        android:layout_height="100dp"
         android:elevation="10dp"
         app:cardCornerRadius="20dp"
-        android:layout_marginTop="10dp"
+        android:background="@drawable/backpc"
+        android:layout_marginTop="20dp"
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp">
 
@@ -87,10 +94,12 @@
             android:id="@+id/lbl_sugestao_dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="Sugestão"
+            android:text="SUGERIR"
+            android:background="@drawable/backpc"
             android:textAlignment="center"
             android:gravity="center_vertical"
-            android:textSize="35sp"
+            android:textSize="40sp"
+            android:textColor="@color/white"
             android:textStyle="bold" />
 
     </android.support.v7.widget.CardView>
@@ -115,6 +124,7 @@
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_gravity="bottom"
+            android:backgroundTint="@color/white"
             android:background="@drawable/ic_logout" />
     </LinearLayout>
 </LinearLayout>

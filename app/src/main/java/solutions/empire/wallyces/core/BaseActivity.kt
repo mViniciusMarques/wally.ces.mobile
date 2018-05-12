@@ -8,8 +8,10 @@ import android.support.v7.app.AppCompatActivity
 import com.firebase.ui.auth.AuthUI
 import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.FirebaseAuth
+import solutions.empire.wallyces.R
 import solutions.empire.wallyces.authentication.LoginActivity
 import solutions.empire.wallyces.util.AppConstantes
+import java.text.SimpleDateFormat
 
 /**
  * Created by mviniciusmarques on 11/03/18.
@@ -56,6 +58,10 @@ open class BaseActivity : AppCompatActivity(){
         val manipuladorRepositorioLocal = sharedPreferences!!.edit()
         manipuladorRepositorioLocal.putString(chave,valor)
         manipuladorRepositorioLocal.commit()
+    }
+
+    protected open fun obterFormatoDeDataBr(): SimpleDateFormat {
+        return SimpleDateFormat(getString(R.string.PADRAO_DATA_PT_BR));
     }
 
 

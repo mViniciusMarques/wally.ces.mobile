@@ -18,6 +18,7 @@ import android.graphics.Color
 import android.opengl.ETC1.getHeight
 import android.opengl.ETC1.getWidth
 import android.os.AsyncTask
+import android.widget.Toast
 import com.google.zxing.BarcodeFormat
 import com.google.zxing.common.BitMatrix
 import com.google.zxing.qrcode.QRCodeWriter
@@ -26,7 +27,7 @@ import com.parse.ParseQuery
 
 class CadastroProvaActivity : AppCompatActivity() {
 
-    val PREFS_NAME = "repositorio_local"
+    private val PREFS_NAME = "repositorio_local"
     var prefs: SharedPreferences? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -39,7 +40,7 @@ class CadastroProvaActivity : AppCompatActivity() {
         actionBar!!.hide()
 
         acaoBotaoCadastrar()
-        atai()
+        botaoTemporarioParaConsultaProva()
         ProvaService().execute()
 
     }
@@ -52,7 +53,6 @@ class CadastroProvaActivity : AppCompatActivity() {
         provaParaSalvar.dataProva =  Date()
         provaParaSalvar.valorProva =  Integer.parseInt(cadastro_prova_valor.text.toString())
         provaParaSalvar.alunoId = this.prefs?.getString("aluno_object_id","")
-        Log.e("cliquei","cliquei")
         return provaParaSalvar
     }
 
@@ -64,9 +64,25 @@ class CadastroProvaActivity : AppCompatActivity() {
         provaParse.put("valor", prova.valorProva)
         provaParse.put("descricao", prova.descricaoProva)
         provaParse.put("aluno_id", prova.alunoId)
-        provaParse.saveInBackground().onSuccess {
-            startActivity(Intent(this, ProvaActivity::class.java))
+        if(provaValidator(prova)) {
+            provaParse.saveInBackground().onSuccess {
+                startActivity(Intent(this, ProvaActivity::class.java))
+            }
         }
+    }
+
+    private fun provaValidator(prova: Prova) : Boolean{
+        if(prova.alunoId.isNullOrEmpty()
+                        .or(prova.dataProva.toString().isNullOrBlank())
+                        .or(prova.valorProva.toString().isNullOrEmpty())
+                        .or(prova.descricaoProva.isNullOrEmpty())
+                        .or(prova.nomeProva.isNullOrEmpty())
+
+        ) {
+            Toast.makeText(this, "Falta de preenchimento de campos obrigatórios",Toast.LENGTH_SHORT).show()
+            return false
+        }
+        return true
     }
 
     private fun acaoBotaoCadastrar() {
@@ -75,7 +91,8 @@ class CadastroProvaActivity : AppCompatActivity() {
         }
     }
 
-    private fun atai() {
+    private fun botaoTemporarioParaConsultaProva() {
+        //botao temp para acesso a consulta de prova
         button2.setOnClickListener {
             startActivity(Intent(this, ProvaActivity::class.java))
         }
@@ -87,11 +104,6 @@ class CadastroProvaActivity : AppCompatActivity() {
         override fun doInBackground(vararg params: Void?): String? {
             obterProvasAlunoLogado()
             return null
-        }
-
-        override fun onPreExecute() {
-            super.onPreExecute()
-
         }
 
         fun obterProvasAlunoLogado() {
